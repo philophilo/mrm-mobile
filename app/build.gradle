@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: rootProject.file('app/code_quality_tools/quality.gradle')
 
 android {
     compileSdkVersion 26
