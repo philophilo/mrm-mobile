@@ -1,4 +1,5 @@
 # MRM Android Application
+[![CircleCI](https://circleci.com/gh/andela/mrm-mobile.svg?style=svg)](https://circleci.com/gh/andela/mrm-mobile)
 
 The MRM (Meeting Room Management) Android app.
 
