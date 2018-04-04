@@ -10,3 +10,4 @@
 instapk.log*
 instapk.properties
 .hgignore
+.idea/instapk.xml
