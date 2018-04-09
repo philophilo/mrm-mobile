@@ -10,4 +10,11 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="Floor"	>
+        <item name="android:fontFamily">DINPro</item>
+        <item name="android:textColor">#FF000000</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
 </resources>

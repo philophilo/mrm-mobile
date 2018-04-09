@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="121dp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginRight="310dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:lineSpacingMultiplier="1.30"
+        android:text="@string/building_text"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp">
+            <ImageButton
+                android:id="@+id/buildingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="80.4dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:text="EPIC Tower"
+                android:textAlignment="center"
+                android:textColor="#5275f4"
+                android:textSize="20sp" />
+        </FrameLayout>
+    </LinearLayout>
+</android.support.v7.widget.LinearLayoutCompat>

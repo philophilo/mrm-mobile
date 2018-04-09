@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BuildingFragment" />
+        <activity android:name=".BuildingActivity"></activity>
         <activity android:name=".login.LoginActivity" android:screenOrientation="landscape"/>
         <activity android:name=".CountryActivity" android:screenOrientation="landscape"/>
     </application>
