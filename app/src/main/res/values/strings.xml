@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MRM</string>
+
+    <string name="country_selection_header">What country is your meeting room in?</string>
+    <string name="kenya">Kenya</string>
+    <string name="nigeria">Nigeria</string>
+    <string name="uganda">Uganda</string>
 </resources>
