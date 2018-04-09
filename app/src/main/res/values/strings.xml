@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MRM</string>
+    <string name="button_description">google login button</string>
+    <string name="image_description">slider image</string>
 
     <string name="country_selection_header">What country is your meeting room in?</string>
     <string name="kenya">Kenya</string>
