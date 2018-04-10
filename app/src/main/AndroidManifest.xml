@@ -9,15 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".RoomSelectionActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BuildingFragment" />
-        <activity android:name=".BuildingActivity"></activity>
+        <activity android:name=".BuildingActivity"  android:screenOrientation="landscape"></activity>
         <activity android:name=".login.LoginActivity" android:screenOrientation="landscape"/>
         <activity android:name=".CountryActivity" android:screenOrientation="landscape"/>
     </application>

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MRM</string>
+    <string name="meeting_rooms_text">Select your meeting room</string>
+    <string name="meeting_room_name">Room Name</string>
     <string name="meeting_room_text">meeting room</string>
     <string name="building_text">What building is this meeting room in?</string>
     <string name="button_description">google login button</string>
