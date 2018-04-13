@@ -7,7 +7,7 @@
     android:layout_gravity="center_vertical">
 
     <LinearLayout
-        android:layout_width="340dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="121dp"
@@ -45,8 +45,8 @@
 
             <TextView
                 android:id="@+id/username"
-                android:layout_width="80.4dp"
-                android:layout_height="52dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="EPIC Tower"
                 android:textAlignment="center"
