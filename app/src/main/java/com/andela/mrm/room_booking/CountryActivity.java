@@ -1,10 +1,12 @@
-package com.andela.mrm;
+package com.andela.mrm.room_booking;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import com.andela.mrm.R;
 
 /**
  * Created by andeladeveloper on 06/04/2018.

@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomSelectionActivity" android:screenOrientation="landscape">
+        <activity android:name=".room_booking.RoomSelectionActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BuildingActivity"  android:screenOrientation="landscape"></activity>
-        <activity android:name=".login.LoginActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".CountryActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".room_booking.BuildingActivity"  android:screenOrientation="landscape"></activity>
+        <activity android:name=".login_flow.LoginActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".room_booking.CountryActivity" android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

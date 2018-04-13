@@ -1,4 +1,4 @@
-package com.andela.mrm;
+package com.andela.mrm.room_booking;
 
 
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+
+import com.andela.mrm.adapter.MeetingRoomsAdapter;
+import com.andela.mrm.R;
 
 
 /**

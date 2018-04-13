@@ -1,4 +1,4 @@
-package com.andela.mrm;
+package com.andela.mrm.adapter;
 
 
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+
+import com.andela.mrm.R;
+import com.andela.mrm.room_booking.MeetingRoom;
 
 import java.util.List;
 

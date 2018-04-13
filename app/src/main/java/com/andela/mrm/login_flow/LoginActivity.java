@@ -1,4 +1,4 @@
-package com.andela.mrm.login;
+package com.andela.mrm.login_flow;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
