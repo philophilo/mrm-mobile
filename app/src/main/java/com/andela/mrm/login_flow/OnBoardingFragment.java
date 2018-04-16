@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,16 +57,25 @@ public class OnBoardingFragment extends Fragment {
         for (int i = 0; i < mDots.length; i++) {
             mDots[i] = new TextView(getActivity().getApplicationContext());
             mDots[i].setText(Html.fromHtml("&#8226;"));
-            mDots[i].setTextSize(35);
+            mDots[i].setTextSize(70);
             mDots[i].setLetterSpacing(0.2f);
             mDots[i].setTextColor(getResources().getColor(R.color.colorWhite));
 
             mDotLayout.addView(mDots[i]);
         }
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int heightPixels = metrics.heightPixels;
+
         if (mDots.length > 0) {
-            mDots[position].setTextSize(15);
-            mDots[position].setPadding(20, 5, 20, -30);
+            if (heightPixels / metrics.density >= 720) {
+                mDots[position].setTextSize(25);
+                mDots[position].setPadding(22, 12, 22, -50);
+            } else {
+                mDots[position].setTextSize(20);
+                mDots[position].setPadding(12, 14, 12, -34);
+            }
             mDots[position].setBackgroundResource(R.drawable.ic_slide_button);
         }
     }

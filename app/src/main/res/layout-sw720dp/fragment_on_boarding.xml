@@ -16,9 +16,9 @@
 
     <ImageView
         android:id="@+id/image_slide"
-        android:layout_width="131dp"
-        android:layout_height="111dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="234dp"
+        android:layout_height="171dp"
+        android:layout_marginBottom="15dp"
         android:contentDescription="@string/image_description"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,14 +29,14 @@
 
     <TextView
         android:id="@+id/text_header"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:fontFamily="@font/dinpro"
         android:gravity="center_horizontal"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="23dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
@@ -44,16 +44,16 @@
     <TextView
         android:id="@+id/text_description"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:fontFamily="@font/dinpro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="17dp"
         android:gravity="center_horizontal"
-        android:paddingEnd="30dp"
-        android:paddingStart="30dp"
+        android:paddingEnd="35dp"
+        android:paddingStart="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_header" />

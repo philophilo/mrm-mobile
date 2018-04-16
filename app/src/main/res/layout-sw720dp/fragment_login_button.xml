@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/button_login"
-        android:layout_width="286dp"
-        android:layout_height="70dp"
+        android:layout_width="375dp"
+        android:layout_height="92dp"
         android:adjustViewBounds="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/button_description"
