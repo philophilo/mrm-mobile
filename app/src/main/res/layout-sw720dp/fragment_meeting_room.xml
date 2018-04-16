@@ -3,34 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.andela.mrm.room_booking.MeetingRoomFragment">
+    tools:context="com.andela.mrm.MeetingRoomFragment">
 
     <TextView
         android:id="@+id/select_meeting_room_text"
-        style="@style/seven_inch"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="418dp"
         android:layout_marginEnd="367dp"
         android:layout_marginStart="365dp"
         android:layout_marginTop="121dp"
         android:gravity="center"
         android:text="@string/meeting_rooms_text"
         android:textAlignment="center"
+        style="@style/ten_inch"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105" />
 
     <GridView
         android:id="@+id/meeting_rooms_grid_view"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="143dp"
         android:layout_marginEnd="100dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="50dp"
         android:numColumns="5"
-        android:verticalSpacing="30dp"
+        android:verticalSpacing="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

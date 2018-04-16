@@ -33,6 +33,9 @@ public class MeetingRoom {
         allMeetingRooms.add(new MeetingRoom("Ubuntu"));
         allMeetingRooms.add(new MeetingRoom("Aso"));
         allMeetingRooms.add(new MeetingRoom("Charley"));
+        allMeetingRooms.add(new MeetingRoom("Cognitio"));
+        allMeetingRooms.add(new MeetingRoom("Obudu"));
+        allMeetingRooms.add(new MeetingRoom("Kente"));
 
         return allMeetingRooms;
     }

@@ -21,6 +21,7 @@ public class MeetingRoomsAdapter extends BaseAdapter {
     private final Context context;
     private final List<MeetingRoom> meetingRooms;
 
+
     /**
      * Instantiates a new Meeting rooms adapter.
      *
@@ -88,13 +89,12 @@ public class MeetingRoomsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MeetingRoom meetingRoom = meetingRooms.get(position);
-
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.partial_meeting_room_button, null);
         }
 
-        Button button = convertView.findViewById(R.id.meeting_room_button);
+        final Button button = convertView.findViewById(R.id.meeting_room_button);
         button.setText(meetingRoom.getmeetingRoomName().toString());
 
         return convertView;
