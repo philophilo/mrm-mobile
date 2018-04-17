@@ -1,4 +1,4 @@
-package com.andela.mrm.room_booking;
+package com.andela.mrm.room_booking.country;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

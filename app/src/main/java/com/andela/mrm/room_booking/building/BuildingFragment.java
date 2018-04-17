@@ -1,4 +1,4 @@
-package com.andela.mrm.room_booking;
+package com.andela.mrm.room_booking.building;
 
 /**
  * Created by baron on 06/04/2018.

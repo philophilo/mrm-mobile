@@ -1,4 +1,4 @@
-package com.andela.mrm.room_booking;
+package com.andela.mrm.room_booking.meeting_room;
 
 
 import java.util.ArrayList;

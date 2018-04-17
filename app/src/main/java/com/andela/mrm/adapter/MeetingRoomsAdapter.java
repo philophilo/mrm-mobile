@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.andela.mrm.R;
-import com.andela.mrm.room_booking.MeetingRoom;
+import com.andela.mrm.room_booking.meeting_room.MeetingRoom;
 
 import java.util.List;
 

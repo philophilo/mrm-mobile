@@ -1,4 +1,4 @@
-package com.andela.mrm.room_booking;
+package com.andela.mrm.room_booking.building;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
