@@ -1,0 +1,23 @@
+query allAllocationsQuery{
+  allLocations {
+    id
+    name
+      abbreviation
+        states {
+          id
+          name
+            blocks {
+              id
+              name
+                floors {
+                  id
+                  name
+                    rooms {
+                      id
+                      name
+                    }
+                }
+            }
+        }
+    }
+}

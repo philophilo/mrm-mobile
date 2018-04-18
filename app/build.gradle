@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
+apply plugin: 'com.apollographql.android'
 apply from: rootProject.file('gradle/install-git-hooks.gradle')
 apply from: rootProject.file('app/code_quality_tools/quality.gradle')
 
@@ -37,4 +38,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation 'com.apollographql.apollo:apollo-runtime:0.5.0'
 }
