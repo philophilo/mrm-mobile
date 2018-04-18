@@ -95,6 +95,14 @@ public class MeetingRoomsAdapter extends BaseAdapter {
         }
 
         final Button button = convertView.findViewById(R.id.meeting_room_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO implement this when standby screen becomes available
+//                Intent intent = new Intent(context, RoomSelectionActivity.class);
+//                context.startActivity(intent);
+            }
+        });
         button.setText(meetingRoom.getmeetingRoomName().toString());
 
         return convertView;

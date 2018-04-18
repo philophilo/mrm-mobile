@@ -1,6 +1,7 @@
 package com.andela.mrm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.floor.Floor;
+import com.andela.mrm.room_booking.meeting_room.RoomSelectionActivity;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class FloorAdapter extends BaseAdapter {
 
-    private final Context context;
+    public final Context context;
     private final List<Floor> floors;
 
     /**
@@ -54,7 +56,15 @@ public class FloorAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.partial_floor_button, null);
         }
+
         Button button = view.findViewById(R.id.floor_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RoomSelectionActivity.class);
+                context.startActivity(intent);
+            }
+        });
         button.setText(floor.getFloorNumber());
         return view;
     }
