@@ -2,6 +2,7 @@ package com.andela.mrm.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.meeting_room.MeetingRoom;
+import com.andela.mrm.room_booking.room_availability.RoomAvailabilityActivity;
 
 import java.util.List;
 
@@ -95,16 +97,16 @@ public class MeetingRoomsAdapter extends BaseAdapter {
         }
 
         final Button button = convertView.findViewById(R.id.meeting_room_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO implement this when standby screen becomes available
-//                Intent intent = new Intent(context, RoomSelectionActivity.class);
-//                context.startActivity(intent);
-            }
-        });
+
         button.setText(meetingRoom.getmeetingRoomName().toString());
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RoomAvailabilityActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
         return convertView;
     }
 }

@@ -1,0 +1,175 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.andela.mrm.room_booking.room_availability.MeetingRoomDetailFragment">
+
+    <LinearLayout
+        android:id="@+id/room_availability_room_detail"
+        android:layout_width="432dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="156dp"
+        android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_room_availability_time_text"
+                android:layout_width="180dp"
+                android:layout_height="30dp"
+                android:textColor="@color/colorWhite"
+                android:text="@string/free_time_text"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:background="@drawable/btn_room_availability_free_time" />
+
+            <Button
+                android:id="@+id/btn_room_availability_in_use_display"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:textColor="@color/colorWhite"
+                android:text="@string/in_use_text"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:background="@drawable/btn_room_availability_in_use" />
+
+            <TextView
+                style="@style/seven_inch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/room_name"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:layout_marginTop="10dp"
+                android:textSize="54sp" />
+
+            <TextView
+                android:id="@+id/text_meeting_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/seven_inch"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:text="@string/room_availability_meeting_title"/>
+
+            <Button
+                android:id="@+id/btn_check_in_early"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                style="@style/seven_inch"
+                android:textColor="@color/colorWhite"
+                android:text="@string/room_check_in_early_button"
+                android:background="@drawable/btn_room_check_in"/>
+
+
+        <LinearLayout
+            android:id="@+id/layout_extra_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_room_extra_time"
+                android:text="@string/plus_ten_mins"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_room_extra_time"
+                android:text="@string/plus_twenty_mins"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_room_extra_time"
+                android:text="@string/plus_thirty_mins"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_free_extra_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/btn_room_extra_time"
+                    android:text="@string/free_ten_mins"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/btn_room_extra_time"
+                    android:text="@string/free_twenty_mins"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/btn_room_extra_time"
+                    android:text="@string/free_thirty_mins"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_check_in"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:textAllCaps="true"
+                android:visibility="gone"
+                style="@style/seven_inch"
+                android:textColor="@color/colorWhite"
+                android:text="@string/room_check_in_button"
+                android:background="@drawable/btn_room_check_in"/>
+
+            <Button
+                android:id="@+id/btn_end_meeting"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:textAllCaps="true"
+                android:visibility="gone"
+                style="@style/seven_inch"
+                android:textColor="@color/colorWhite"
+                android:text="@string/room_end_meeting_text"
+                android:background="@drawable/btn_room_availability_end_meeting"/>
+
+        </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

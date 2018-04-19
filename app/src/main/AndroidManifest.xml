@@ -13,13 +13,14 @@
         <activity android:name=".room_booking.building.BuildingActivity"  android:screenOrientation="landscape"/>
         <activity android:name=".room_booking.country.CountryActivity" android:screenOrientation="landscape"/>
         <activity android:name=".room_booking.floor.FloorSelectionActivity" android:screenOrientation="landscape"/>
-
         <activity android:name=".login_flow.LoginActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".room_booking.room_availability.RoomAvailabilityActivity">
         </activity>
     </application>
 

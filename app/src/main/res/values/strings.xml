@@ -2,6 +2,11 @@
     <string name="app_name">MRM</string>
     <string name="meeting_rooms_text">Select your meeting room</string>
     <string name="meeting_room_name">Room Name</string>
+    <string name="room_name">Cognitio</string>
+    <string name="free_time_text">Free for 9 minutes</string>
+    <string name="time_till_next_meeting">Time Till Next Meeting</string>
+    <string name="room_availability_meeting_title">Apprenticeship Design Sync</string>
+    <string name="room_check_in_early_button">CHECK-IN EARLY</string>
     <string name="meeting_room_text">meeting room</string>
     <string name="building_text">What building is this meeting room in?</string>
     <string name="button_description">google login button</string>
@@ -10,6 +15,19 @@
     <string name="kenya">Kenya</string>
     <string name="nigeria">Nigeria</string>
     <string name="uganda">Uganda</string>
+    <string name="hello_blank_fragment">TimeLine to be displayed here</string>
+    <string name="room_availability_countdwown_time">00:09:59</string>
+    <string name="feed_back_room_info">Room info</string>
+    <string name="feed_back_support">Support</string>
+    <string name="in_use_text"><![CDATA[11:30am -> 12:30am]]></string>
+    <string name="room_end_meeting_text">End Meeting</string>
+    <string name="room_check_in_button">Check-In</string>
+    <string name="plus_thirty_mins">+ 30 mins</string>
+    <string name="plus_ten_mins">+ 10 mins</string>
+    <string name="plus_twenty_mins">+ 20 mins</string>
+    <string name="free_ten_mins">10 mins</string>
+    <string name="free_twenty_mins">20 mins</string>
+    <string name="free_thirty_mins">30 mins</string>
     <string name="floor_number">Floor Number</string>
     <string name="floor_text">What floor is the meeting room?</string>
 </resources>
