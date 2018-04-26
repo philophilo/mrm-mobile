@@ -8,10 +8,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * Created by baron on 18/04/2018.
  */
 
-final class MyApolloClient {
+public final class MyApolloClient {
 
     private static final String BASE_URL =
-            "https://api.graph.cool/simple/v1/cjg4sn59p5gkp01896q0wollo";
+            "https://api.graph.cool/simple/v1/cjgdrz83r1t4k0173p13insaj";
     private static ApolloClient myApolloClient;
 
     /**
@@ -26,7 +26,6 @@ final class MyApolloClient {
      * Apollo implementation method.
      * @return expected myApolloClient object.
      */
-
     public static ApolloClient getMyApolloClient() {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

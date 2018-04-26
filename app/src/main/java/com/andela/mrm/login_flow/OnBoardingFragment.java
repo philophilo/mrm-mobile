@@ -1,11 +1,9 @@
 package com.andela.mrm.login_flow;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 
 import com.andela.mrm.R;
 import com.andela.mrm.adapter.ImageSliderAdapter;
+import com.andela.mrm.util.ScreenSizeChecker;
 
 /**
  * A {@link Fragment} subclass.
@@ -31,7 +30,7 @@ public class OnBoardingFragment extends Fragment {
 
         mImageSliderAdapter = new ImageSliderAdapter();
 
-        mViewPager = new ViewPager(getActivity());
+        mViewPager = new ViewPager(container.getContext());
         mViewPager = container.findViewById(R.id.view_pager_layout);
 
         mDotLayout = container.findViewById(R.id.dot_layout);
@@ -55,7 +54,7 @@ public class OnBoardingFragment extends Fragment {
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < mDots.length; i++) {
-            mDots[i] = new TextView(getActivity().getApplicationContext());
+            mDots[i] = new TextView(getActivity());
             mDots[i].setText(Html.fromHtml("&#8226;"));
             mDots[i].setTextSize(70);
             mDots[i].setLetterSpacing(0.2f);
@@ -64,17 +63,13 @@ public class OnBoardingFragment extends Fragment {
             mDotLayout.addView(mDots[i]);
         }
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int heightPixels = metrics.heightPixels;
-
         if (mDots.length > 0) {
-            if (heightPixels / metrics.density >= 720) {
-                mDots[position].setTextSize(25);
-                mDots[position].setPadding(22, 12, 22, -50);
+            if (!ScreenSizeChecker.getScreenSize(getContext())) {
+                mDots[position].setTextSize(28);
+                mDots[position].setPadding(22, 10, 22, -42);
             } else {
-                mDots[position].setTextSize(20);
-                mDots[position].setPadding(12, 14, 12, -34);
+                mDots[position].setTextSize(24);
+                mDots[position].setPadding(14, 12, 14, -27);
             }
             mDots[position].setBackgroundResource(R.drawable.ic_slide_button);
         }

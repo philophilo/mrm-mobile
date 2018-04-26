@@ -30,4 +30,5 @@
     <string name="free_thirty_mins">30 mins</string>
     <string name="floor_number">Floor Number</string>
     <string name="floor_text">What floor is the meeting room?</string>
+    <string name="country_flag">country flag</string>
 </resources>

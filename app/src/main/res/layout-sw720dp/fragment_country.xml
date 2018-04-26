@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,11 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="228dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/image_kenya"
+        android:background="@drawable/image_holder"
         app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:contentDescription="@string/country_flag"/>
 
     <TextView
         android:id="@+id/text_kenya"
@@ -43,7 +43,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/dinpro"
-        android:text="@string/kenya"
         style="@style/ten_inch"
         app:layout_constraintEnd_toEndOf="@+id/btn_kenya"
         app:layout_constraintHorizontal_bias="0.507"
@@ -57,10 +56,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="204dp"
-        android:background="@drawable/image_nigeria"
+        android:background="@drawable/image_holder"
         app:layout_constraintEnd_toStartOf="@+id/btn_uganda"
         app:layout_constraintStart_toEndOf="@+id/btn_kenya"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/country_flag"/>
 
     <TextView
         android:id="@+id/text_nigeria"
@@ -68,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/dinpro"
-        android:text="@string/nigeria"
         style="@style/ten_inch"
         app:layout_constraintEnd_toEndOf="@+id/btn_nigeria"
         app:layout_constraintStart_toStartOf="@+id/btn_nigeria"
@@ -80,11 +79,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="232dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/image_uganda"
+        android:background="@drawable/image_holder"
         app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:contentDescription="@string/country_flag"/>
 
     <TextView
         android:id="@+id/text_uganda"
@@ -92,7 +92,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/dinpro"
-        android:text="@string/uganda"
         style="@style/ten_inch"
         app:layout_constraintEnd_toEndOf="@+id/btn_uganda"
         app:layout_constraintHorizontal_bias="0.43"
