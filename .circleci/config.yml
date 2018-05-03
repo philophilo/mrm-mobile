@@ -207,13 +207,27 @@ jobs:
 
       # Running UI tests
       - run:
-          name: Running integration tests on apk build
+          name: Setup emulator
           command: |
             echo y | sdkmanager "system-images;android-22;default;armeabi-v7a"
             echo no | avdmanager create avd --force --name test --abi armeabi-v7a -k "system-images;android-22;default;armeabi-v7a"
-            echo y | emulator -avd test -no-window &
+
+      - run:
+          name: Start emulator
+          command: echo y | emulator -avd test -skin 768x1280 -no-boot-anim -no-window -accel on
+          background: true
+
+      - run:
+          name: Wait emulator
+          command: |
+            # wait for it to have booted
             circle-android wait-for-boot
-            ./gradlew connectedAndroidTest
+            # unlock the emulator screen
+            adb shell input keyevent 82
+
+      - run:
+          name: Run EspressoTests
+          command: ./gradlew connectedAndroidTest
 
       # Storing UI test reports
       - store_artifacts:

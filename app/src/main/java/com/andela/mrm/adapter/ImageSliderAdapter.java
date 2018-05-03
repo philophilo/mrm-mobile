@@ -1,6 +1,7 @@
 package com.andela.mrm.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.andela.mrm.R;
 /**
  * ImageSliderAdapter class.
  * Adds the three onBoarding views
- *
  */
 
 public class ImageSliderAdapter extends PagerAdapter {
@@ -22,14 +22,16 @@ public class ImageSliderAdapter extends PagerAdapter {
             R.drawable.ic_meeting, R.drawable.ic_room_status, R.drawable.ic_rating
     };
 
-    private final String[] slideHeaders = {
-            "EASIER MEETINGS", "MEETING ROOM STATUS", "GIVE FEEDBACK"
+    private final int[] slideHeaders = {
+            R.string.onBoarding_header_one,
+            R.string.onBoarding_header_two,
+            R.string.onBoarding_header_three
     };
 
-    private final String[] slideDesc = {
-            "Meetings are now even more fun with the MRM App",
-            "View meeting rooms status across the whole office space",
-            "Give feedback on meeting rooms right from the meeting room without stepping out"
+    private final int[] slideDescriptions = {
+            R.string.onBoarding_description_one,
+            R.string.onBoarding_description_two,
+            R.string.onBoarding_description_three
     };
 
     @Override
@@ -38,13 +40,14 @@ public class ImageSliderAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
 
         return view.equals(object);
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         container.getContext();
         LayoutInflater layoutInflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,7 +62,7 @@ public class ImageSliderAdapter extends PagerAdapter {
 
         slideImage.setImageResource(slideImages[position]);
         slideHeading.setText(slideHeaders[position]);
-        slideDescription.setText(slideDesc[position]);
+        slideDescription.setText(slideDescriptions[position]);
 
         container.addView(view);
 
@@ -67,7 +70,7 @@ public class ImageSliderAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 }
