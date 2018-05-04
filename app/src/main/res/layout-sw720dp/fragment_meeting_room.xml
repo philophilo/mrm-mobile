@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.andela.mrm.MeetingRoomFragment">
+    tools:context="com.andela.mrm.room_booking.meeting_room.MeetingRoomFragment">
 
     <TextView
         android:id="@+id/select_meeting_room_text"
+        style="@style/ten_inch"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="418dp"
         android:layout_marginEnd="367dp"
         android:layout_marginStart="365dp"
@@ -16,13 +17,12 @@
         android:gravity="center"
         android:text="@string/meeting_rooms_text"
         android:textAlignment="center"
-        style="@style/ten_inch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <GridView
         android:id="@+id/meeting_rooms_grid_view"

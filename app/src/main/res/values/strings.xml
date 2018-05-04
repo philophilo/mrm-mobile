@@ -31,6 +31,7 @@
     <string name="floor_number">Floor Number</string>
     <string name="floor_text">What floor is the meeting room?</string>
     <string name="country_flag">country flag</string>
+    <string name="building">Building</string>
     <string name="onBoarding_header_one">EASIER MEETINGS</string>
     <string name="onBoarding_header_two">MEETING ROOM STATUS</string>
     <string name="onBoarding_header_three">GIVE FEEDBACK</string>
