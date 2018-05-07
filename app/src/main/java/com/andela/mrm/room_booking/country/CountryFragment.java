@@ -23,20 +23,30 @@ import java.util.List;
 /**
  * Created by andeladeveloper on 06/04/2018.
  */
-
 public class CountryFragment extends Fragment implements CountryPresenter.CountryView {
+    /**
+     * The Country presenter.
+     */
     CountryPresenter countryPresenter = new CountryPresenter(this);
 
+    /**
+     * The Progress dialog.
+     */
     ProgressDialog progressDialog;
 
+    /**
+     * The Button IDs.
+     */
     public final int[] buttonIDs = {R.id.btn_kenya, R.id.btn_nigeria, R.id.btn_uganda};
+    /**
+     * The Text IDs.
+     */
     public final int[] textIDs = {R.id.text_kenya, R.id.text_nigeria, R.id.text_uganda};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        queryApi();
+       queryApi();
 
         View view = inflater.inflate(R.layout.fragment_country, container, false);
         ImageButton imageButton = view.findViewById(R.id.btn_nigeria);
@@ -48,6 +58,7 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
                 startActivity(intent);
             }
         });
+
 
         return view;
     }
@@ -99,4 +110,5 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
             progressDialog.dismiss();
         }
     }
+
 }

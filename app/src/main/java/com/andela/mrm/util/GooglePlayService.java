@@ -1,4 +1,4 @@
-package com.andela.mrm.utils;
+package com.andela.mrm.util;
 
 import android.app.Activity;
 import android.app.Dialog;

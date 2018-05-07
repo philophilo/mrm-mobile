@@ -5,18 +5,20 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.meeting_room.MeetingRoomFragment;
-import com.andela.mrm.utils.GooglePlayService;
+import com.andela.mrm.util.GooglePlayService;
+import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -46,15 +48,37 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         MeetingRoomDetailFragment.IOnStartCountDown, EasyPermissions.PermissionCallbacks {
 
     private FragmentManager fragmentManager;
+    /**
+     * The Constraint layout.
+     */
+    ConstraintLayout constraintLayout;
 
+    /**
+     * The M credential.
+     */
     GoogleAccountCredential mCredential;
 
 
+    /**
+     * The Request account picker.
+     */
     static final int REQUEST_ACCOUNT_PICKER = 1000;
+    /**
+     * The Request authorization.
+     */
     static final int REQUEST_AUTHORIZATION = 1001;
+    /**
+     * The Request google play services.
+     */
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+    /**
+     * The Request permission get accounts.
+     */
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
+    /**
+     * The Play service.
+     */
     GooglePlayService playService;
 
     private static final String BUTTON_TEXT = "Call Google Calendar API";
@@ -136,13 +160,21 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
      * of the preconditions are not satisfied, the app will prompt the user as
      * appropriate.
      */
-    private void getResultsFromApi() {
+    public void getResultsFromApi() {
         if (!playService.isGooglePlayServicesAvailable(getApplicationContext())) {
             playService.acquireGooglePlayServices(getApplicationContext(), this);
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (!isDeviceOnline()) {
-            Log.v("device not connected", "No network connection available.");
+            constraintLayout = findViewById(R.id.layout_room_availability);
+            Snackbar.make(constraintLayout, "No Network Found", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getResultsFromApi();
+                        }
+                    })
+                    .show();
         } else {
             new MakeRequestTask(mCredential).execute();
         }
@@ -285,10 +317,7 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
      * @return true if the device has a network connection, false otherwise.
      */
     private boolean isDeviceOnline() {
-        ConnectivityManager connMgr =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        return NetworkConnectivityChecker.isDeviceOnline(getApplicationContext());
     }
 
     /**
