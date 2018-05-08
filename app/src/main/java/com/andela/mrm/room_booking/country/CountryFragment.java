@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       queryApi();
+        queryApi();
 
         View view = inflater.inflate(R.layout.fragment_country, container, false);
         ImageButton imageButton = view.findViewById(R.id.btn_nigeria);
@@ -111,4 +112,25 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
         }
     }
 
+    /**
+     * Displays a snackbar notification for poor or no network connections.
+     *
+     * @param isNetworkAvailable - boolean value which determines if there is network or not
+     */
+    @Override
+    public void displaySnackBar(Boolean isNetworkAvailable) {
+        String notificationText = "No Network Found";
+
+        if (isNetworkAvailable) {
+            notificationText = "Bad Network Connection";
+        }
+
+        Snackbar.make(getView(), notificationText, Snackbar.LENGTH_INDEFINITE)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        queryApi();
+                    }
+                }).show();
+    }
 }

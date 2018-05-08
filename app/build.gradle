@@ -54,4 +54,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.apollographql.apollo:apollo-http-cache:0.5.0'
+    implementation "com.apollographql.apollo:apollo-android-support:0.5.0"
 }

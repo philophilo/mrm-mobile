@@ -1,10 +1,9 @@
 package com.andela.mrm.presenter;
 
-import android.util.Log;
-
 import com.andela.mrm.AllLocationsQuery;
 import com.andela.mrm.room_booking.country.CountryFragment;
 import com.andela.mrm.service.MyApolloClient;
+import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
@@ -45,27 +44,38 @@ public class CountryPresenter {
          * Abstract method called for dismissing progress dialog if present.
          */
         void dismissDialog();
+
+        /**
+         * Abstract method called for Displaying snackbar notification.
+         * for poor or no network connections
+         *
+         * @param isNetworkAvailable - boolean value which determines if there is network or not
+         */
+        void displaySnackBar(Boolean isNetworkAvailable);
     }
 
     /**
      * Class method for querying graphQL api endpoint through the apollo client.
      */
     public void getAllLocations() {
-        MyApolloClient.getMyApolloClient().query(
-                AllLocationsQuery.builder().build()
-        ).enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
-            @Override
-            public void onResponse(@Nonnull Response<AllLocationsQuery.Data> response) {
+        MyApolloClient.getMyApolloClient(view.getContext())
+                .query(AllLocationsQuery.builder().build())
+                .enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
+                    @Override
+                    public void onResponse(@Nonnull Response<AllLocationsQuery.Data> response) {
 
-                view.displayCountries(response.data().allLocations());
-            }
+                        view.displayCountries(response.data().allLocations());
+                    }
 
-            @Override
-            public void onFailure(@Nonnull ApolloException e) {
-                view.dismissDialog();
-                Log.e("ERROR OCCURRED", e.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@Nonnull ApolloException e) {
+                        view.dismissDialog();
+                        view.displaySnackBar(
+                                NetworkConnectivityChecker
+                                        .isDeviceOnline(view.getContext())
+                        );
+                    }
+                });
 
     }
 }

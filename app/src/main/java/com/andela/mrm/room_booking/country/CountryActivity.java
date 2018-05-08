@@ -26,9 +26,7 @@ public class CountryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_country);
-    /**
-     * The Country fragment.
-     */
+
         CountryFragment countryFragment = new CountryFragment();
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
