@@ -6,6 +6,7 @@
 
     <TextView
         android:id="@+id/text_country_selection_header"
+        style="@style/ten_inch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -14,89 +15,94 @@
         android:layout_marginTop="88dp"
         android:fontFamily="@font/dinpro"
         android:text="@string/country_selection_header"
-        style="@style/ten_inch"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nigeria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.097" />
 
 
-    <ImageButton
-        android:id="@+id/btn_kenya"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/image_holder"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
-        app:layout_constraintVertical_bias="1.0"
-        android:contentDescription="@string/country_flag"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_flags_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/text_kenya"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/dinpro"
-        style="@style/ten_inch"
-        app:layout_constraintEnd_toEndOf="@+id/btn_kenya"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/btn_kenya"
-        app:layout_constraintTop_toBottomOf="@+id/btn_kenya" />
+        <ImageButton
+            android:id="@+id/btn_kenya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="228dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/image_holder"
+            android:contentDescription="@string/country_flag"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <ImageButton
-        android:id="@+id/btn_nigeria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="204dp"
-        android:background="@drawable/image_holder"
-        app:layout_constraintEnd_toStartOf="@+id/btn_uganda"
-        app:layout_constraintStart_toEndOf="@+id/btn_kenya"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/country_flag"/>
+        <TextView
+            android:id="@+id/text_kenya"
+            style="@style/ten_inch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/dinpro"
+            app:layout_constraintEnd_toEndOf="@+id/btn_kenya"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="@+id/btn_kenya"
+            app:layout_constraintTop_toBottomOf="@+id/btn_kenya" />
 
-    <TextView
-        android:id="@+id/text_nigeria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/dinpro"
-        style="@style/ten_inch"
-        app:layout_constraintEnd_toEndOf="@+id/btn_nigeria"
-        app:layout_constraintStart_toStartOf="@+id/btn_nigeria"
-        app:layout_constraintTop_toBottomOf="@+id/btn_nigeria" />
+        <ImageButton
+            android:id="@+id/btn_nigeria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="204dp"
+            android:background="@drawable/image_holder"
+            android:contentDescription="@string/country_flag"
+            app:layout_constraintEnd_toStartOf="@+id/btn_uganda"
+            app:layout_constraintStart_toEndOf="@+id/btn_kenya"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btn_uganda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="232dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/image_holder"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
-        app:layout_constraintVertical_bias="1.0"
-        android:contentDescription="@string/country_flag"/>
+        <TextView
+            android:id="@+id/text_nigeria"
+            style="@style/ten_inch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/dinpro"
+            app:layout_constraintEnd_toEndOf="@+id/btn_nigeria"
+            app:layout_constraintStart_toStartOf="@+id/btn_nigeria"
+            app:layout_constraintTop_toBottomOf="@+id/btn_nigeria" />
 
-    <TextView
-        android:id="@+id/text_uganda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/dinpro"
-        style="@style/ten_inch"
-        app:layout_constraintEnd_toEndOf="@+id/btn_uganda"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="@+id/btn_uganda"
-        app:layout_constraintTop_toBottomOf="@+id/btn_uganda" />
+        <ImageButton
+            android:id="@+id/btn_uganda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="232dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/image_holder"
+            android:contentDescription="@string/country_flag"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_nigeria"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_nigeria"
+            app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/text_uganda"
+            style="@style/ten_inch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/dinpro"
+            app:layout_constraintEnd_toEndOf="@+id/btn_uganda"
+            app:layout_constraintHorizontal_bias="0.43"
+            app:layout_constraintStart_toStartOf="@+id/btn_uganda"
+            app:layout_constraintTop_toBottomOf="@+id/btn_uganda" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

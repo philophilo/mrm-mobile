@@ -30,6 +30,8 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
      */
     CountryPresenter countryPresenter = new CountryPresenter(this);
 
+    View view;
+
     /**
      * The Progress dialog.
      */
@@ -47,9 +49,11 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_country, container, false);
+
         queryApi();
 
-        View view = inflater.inflate(R.layout.fragment_country, container, false);
         ImageButton imageButton = view.findViewById(R.id.btn_nigeria);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +63,6 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
                 startActivity(intent);
             }
         });
-
-
         return view;
     }
 
@@ -73,7 +75,20 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
         progressDialog.isIndeterminate();
         progressDialog.show();
 
-        countryPresenter.getAllLocations();
+        countryPresenter.getAllLocations(new CountryPresenter.DataLoadedCallback() {
+            @Override
+            public void onDataLoaded(boolean dataLoaded) {
+                if (dataLoaded) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            view.findViewById(R.id.fragment_flags_layout)
+                                    .setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -97,8 +112,10 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
 
                     countryText.setText(mData.get(i).name());
                 }
+                getView().findViewById(R.id.fragment_flags_layout).setVisibility(View.VISIBLE);
             }
         });
+
         dismissDialog();
     }
 

@@ -56,8 +56,10 @@ public class CountryPresenter {
 
     /**
      * Class method for querying graphQL api endpoint through the apollo client.
+     *
+     * @param dataLoadedCallback - callback interface
      */
-    public void getAllLocations() {
+    public void getAllLocations(final DataLoadedCallback dataLoadedCallback) {
         MyApolloClient.getMyApolloClient(view.getContext())
                 .query(AllLocationsQuery.builder().build())
                 .enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
@@ -65,6 +67,8 @@ public class CountryPresenter {
                     public void onResponse(@Nonnull Response<AllLocationsQuery.Data> response) {
 
                         view.displayCountries(response.data().allLocations());
+
+                        dataLoadedCallback.onDataLoaded(true);
                     }
 
                     @Override
@@ -74,8 +78,22 @@ public class CountryPresenter {
                                 NetworkConnectivityChecker
                                         .isDeviceOnline(view.getContext())
                         );
+                        dataLoadedCallback.onDataLoaded(false);
                     }
                 });
 
+    }
+
+    /**
+     * Asynchronous callback interface.
+     * Triggered either on queried Api success or failure response
+     */
+    public interface DataLoadedCallback {
+        /**
+         * Indicates if the queried api response data is available or not.
+         *
+         * @param dataLoaded - boolean variable
+         */
+        void onDataLoaded(boolean dataLoaded);
     }
 }
