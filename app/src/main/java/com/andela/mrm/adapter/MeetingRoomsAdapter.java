@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.meeting_room.MeetingRoom;
-import com.andela.mrm.room_booking.room_availability.RoomAvailabilityActivity;
+import com.andela.mrm.room_booking.room_availability.views.RoomAvailabilityActivity;
 
 import java.util.List;
 

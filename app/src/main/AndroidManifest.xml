@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.andela.mrm">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -14,19 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".room_booking.meeting_room.RoomSelectionActivity" android:screenOrientation="landscape" />
-        <activity android:name=".room_booking.building.BuildingActivity"  android:screenOrientation="landscape"/>
-        <activity android:name=".room_booking.country.CountryActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".room_booking.floor.FloorSelectionActivity" android:screenOrientation="landscape"/>
-        <activity android:name=".login_flow.LoginActivity" android:screenOrientation="landscape">
+        <activity
+            android:name=".room_booking.meeting_room.RoomSelectionActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".room_booking.building.BuildingActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".room_booking.country.CountryActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".room_booking.floor.FloorSelectionActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".login_flow.LoginActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".room_booking.room_availability.RoomAvailabilityActivity">
-        </activity>
+        <activity android:name=".room_booking.room_availability.views.RoomAvailabilityActivity"></activity>
+        <activity
+            android:name=".room_booking.room_availability.views.EventScheduleActivity"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

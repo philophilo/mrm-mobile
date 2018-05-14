@@ -19,6 +19,8 @@
     <string name="room_availability_countdwown_time">00:09:59</string>
     <string name="feed_back_room_info">Room info</string>
     <string name="feed_back_support">Support</string>
+    <string name="find_room">Find Room</string>
+    <string name="schedule_room">Schedule</string>
     <string name="in_use_text"><![CDATA[11:30am -> 12:30am]]></string>
     <string name="room_end_meeting_text">End Meeting</string>
     <string name="room_check_in_button">Check-In</string>

@@ -1,4 +1,4 @@
-package com.andela.mrm.room_booking.room_availability;
+package com.andela.mrm.room_booking.room_availability.views;
 
 
 import android.app.Activity;

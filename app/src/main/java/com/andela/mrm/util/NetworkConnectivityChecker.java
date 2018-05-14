@@ -12,7 +12,7 @@ public final class NetworkConnectivityChecker {
      * Private constructor for NetworkConnectivityChecker class.
      */
     private NetworkConnectivityChecker() {
-     // Private constructor
+        // Private constructor
     }
 
     /**

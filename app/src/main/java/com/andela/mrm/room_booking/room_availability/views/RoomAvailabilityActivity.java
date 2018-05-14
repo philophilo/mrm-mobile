@@ -1,12 +1,13 @@
-package com.andela.mrm.room_booking.room_availability;
+package com.andela.mrm.room_booking.room_availability.views;
 
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -14,26 +15,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.andela.mrm.R;
-import com.andela.mrm.room_booking.meeting_room.MeetingRoomFragment;
+import com.andela.mrm.presenter.MakeGoogleCalendarCallPresenter;
 import com.andela.mrm.util.GooglePlayService;
 import com.andela.mrm.util.NetworkConnectivityChecker;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,9 +39,19 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class RoomAvailabilityActivity extends AppCompatActivity implements
         CountDownTimerFragment.IOnTextChangeListener,
+        MakeGoogleCalendarCallPresenter.IMakeRequestTaskListener,
         MeetingRoomDetailFragment.IOnStartCountDown, EasyPermissions.PermissionCallbacks {
 
     private FragmentManager fragmentManager;
+    private LinearLayout roomSchedule;
+    /**
+     * The Items.
+     */
+    public List<Event> items;
+    /**
+     * The constant EVENTS_IN_STRING.
+     */
+    public static final String EVENTS_IN_STRING = "eventsInString";
     /**
      * The Constraint layout.
      */
@@ -57,8 +61,6 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
      * The M credential.
      */
     GoogleAccountCredential mCredential;
-
-
     /**
      * The Request account picker.
      */
@@ -90,6 +92,10 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_availability);
 
+        roomSchedule = findViewById(R.id.layout_schedule);
+
+        setRoomScheduleOnClickListener(null);
+
         playService = new GooglePlayService();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -105,11 +111,14 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         getResultsFromApi();
     }
 
+
     @Override
     public void onTimeChange(int minutes) {
         MeetingRoomDetailFragment meetingRoomDetailFragment = (MeetingRoomDetailFragment)
                 getSupportFragmentManager().findFragmentById(R.id.frame_room_availability_details);
-        meetingRoomDetailFragment.updateMinute(minutes);
+        if (meetingRoomDetailFragment != null) {
+            meetingRoomDetailFragment.updateMinute(minutes);
+        }
     }
 
     @Override
@@ -118,11 +127,6 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
                 getSupportFragmentManager().findFragmentById(R.id.frame_room_availability_details);
         if (meetingRoomDetailFragment != null) {
             meetingRoomDetailFragment.displayCheckInScreen();
-        } else {
-            MeetingRoomFragment meetingRoomFragment = new MeetingRoomFragment();
-            FragmentManager fragmentTransaction = getSupportFragmentManager();
-            fragmentTransaction.beginTransaction()
-                    .add(R.id.frame_room_availability_details, meetingRoomFragment).commit();
         }
     }
 
@@ -166,7 +170,7 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (!isDeviceOnline()) {
-            constraintLayout = findViewById(R.id.layout_room_availability);
+            constraintLayout = findViewById(R.id.layout_room_availability_parent);
             Snackbar.make(constraintLayout, "No Network Found", Snackbar.LENGTH_INDEFINITE)
                     .setAction("RETRY", new View.OnClickListener() {
                         @Override
@@ -176,7 +180,7 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
                     })
                     .show();
         } else {
-            new MakeRequestTask(mCredential).execute();
+            new MakeGoogleCalendarCallPresenter(mCredential, this).execute();
         }
     }
 
@@ -320,110 +324,55 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         return NetworkConnectivityChecker.isDeviceOnline(getApplicationContext());
     }
 
+
     /**
-     * An asynchronous task that handles the Google Calendar API call.
-     * Placing the API calls in their own task ensures the UI stays responsive.
+     * Sets the onClick Listener.
+     *
+     * @param eventsInString String.
      */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private final com.google.api.services.calendar.Calendar mService;
-        private Exception mLastError = null;
-
-        /**
-         * Instantiates a new Make request task.
-         *
-         * @param credential the credential
-         */
-        MakeRequestTask(GoogleAccountCredential credential) {
-            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new com.google.api.services.calendar.Calendar.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Calendar API Android Quickstart")
-                    .build();
-        }
-
-        /**
-         * Background task to call Google Calendar API.
-         *
-         * @param params no parameters needed for this task.
-         */
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            try {
-                return getDataFromApi();
-            } catch (Exception e) {
-                mLastError = e;
-                cancel(true);
-                return null;
-            }
-        }
-
-        /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         *
-         * @return List of Strings describing returned events.
-         * @throws IOException ioException
-         */
-        private List<String> getDataFromApi() throws IOException {
-            // List the next 10 events from the primary calendar.
-            DateTime now = new DateTime(System.currentTimeMillis());
-            List<String> eventStrings = new ArrayList<String>();
-            Events events = mService.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute();
-            List<Event> items = events.getItems();
-
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start = event.getStart().getDate();
-                }
-                eventStrings.add(
-                        String.format("%s (%s)", event.getSummary(), start));
-            }
-            return eventStrings;
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            Log.v("Loading", "Loading now...");
-        }
-
-        @Override
-        protected void onPostExecute(List<String> output) {
-            if (output == null || output.isEmpty()) {
-                Log.v("No results", "No results returned.");
-            } else {
-                output.add(0, "Data retrieved using the Google Calendar API:");
-                for (int i = 0; i < output.size(); i++) {
-                    Log.v("Output", "" + output.get(i));
-                }
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            if (mLastError != null) {
-                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
-                    playService.showGooglePlayServicesAvailabilityErrorDialog(
-                            ((GooglePlayServicesAvailabilityIOException) mLastError)
-                                    .getConnectionStatusCode(), RoomAvailabilityActivity.this);
-                } else if (mLastError instanceof UserRecoverableAuthIOException) {
-                    startActivityForResult(
-                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            RoomAvailabilityActivity.REQUEST_AUTHORIZATION);
+    public void setRoomScheduleOnClickListener(@Nullable final String eventsInString) {
+        roomSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (eventsInString == null) {
+                    ConstraintLayout roomAVailabilityParentLayout =
+                            findViewById(R.id.layout_room_availability_parent);
+                    Snackbar.make(roomAVailabilityParentLayout,
+                            "Initializing, please wait...", Snackbar.LENGTH_SHORT)
+                            .show();
                 } else {
-                    Log.v("This error occurred: ", "" + mLastError.getMessage());
+                    Intent intent = new Intent(RoomAvailabilityActivity.this,
+                            EventScheduleActivity.class);
+                    intent.putExtra(EVENTS_IN_STRING, eventsInString);
+                    Log.e("Data in sender", eventsInString);
+                    startActivity(intent);
                 }
-            } else {
-                Log.v("Cancelled", "Request cancelled.");
             }
-        }
+        });
+    }
+
+    @Override
+    public void onSuccess(String itemsInString) {
+        setRoomScheduleOnClickListener(itemsInString);
+    }
+
+    @Override
+    public void onCancelled(Exception mLastError) {
+        if (mLastError != null) {
+          if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
+                playService.showGooglePlayServicesAvailabilityErrorDialog(
+                       ((GooglePlayServicesAvailabilityIOException) mLastError)
+                               .getConnectionStatusCode(),
+                       RoomAvailabilityActivity.this);
+           } else if (mLastError instanceof UserRecoverableAuthIOException) {
+               startActivityForResult(
+                       ((UserRecoverableAuthIOException) mLastError).getIntent(),
+                      RoomAvailabilityActivity.REQUEST_AUTHORIZATION);
+          } else {
+              Log.v("This error occurred: ", "" + mLastError.getMessage());
+          }
+       } else {
+          Log.v("Cancelled", "Request cancelled.");
+       }
     }
 }

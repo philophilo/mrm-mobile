@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_room_availability"
+    android:id="@+id/layout_room_availability_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.andela.mrm.room_booking.room_availability.RoomAvailabilityActivity">
+    tools:context="com.andela.mrm.room_booking.room_availability.views.RoomAvailabilityActivity">
 
     <ImageView
         android:id="@+id/img_room_availability_background_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/room"/>
+        android:src="@drawable/room"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/img_room_availability_background_gradient"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/room_availability_background_gradient"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/room_availability_background_gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frame_room_availability_time_line"
@@ -46,6 +54,7 @@
         app:layout_constraintVertical_bias="0.206" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,19 +68,68 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="88dp"
-            android:layout_marginTop="508dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="416dp"
+            android:background="@drawable/button_background"
             android:orientation="horizontal"
-            android:paddingBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:context="com.andela.mrm.room_booking.room_availability.FeedBackFragment">
 
             <LinearLayout
+                android:id="@+id/layout_find_room"
                 android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:paddingBottom="15dp"
-                android:background="#FF3359DB">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/find_room"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_schedule"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/schedule_room"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_room_info"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -85,7 +143,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
-                    android:background="#FF3359DB"
                     android:text="@string/feed_back_room_info"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
@@ -95,10 +152,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_support"
                 android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:background="#FFFFAF30"
-                android:paddingBottom="15dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -112,7 +168,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
-                    android:background="#FFFFAF30"
                     android:text="@string/feed_back_support"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
