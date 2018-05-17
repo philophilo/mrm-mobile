@@ -1,6 +1,8 @@
 package com.andela.mrm.room_booking.room_availability.models;
 
 
+import android.support.annotation.Nullable;
+
 /**
  * Created by andeladeveloper on 01/05/2018.
  */
@@ -17,7 +19,7 @@ public class CalendarEvent {
      * @param startTime the start time
      * @param endTime   the end time
      */
-    public CalendarEvent(String summary, Long startTime, Long endTime) {
+    public CalendarEvent(String summary, @Nullable Long startTime, @Nullable Long endTime) {
         this.summary = summary;
         this.startTime = startTime;
         this.endTime = endTime;

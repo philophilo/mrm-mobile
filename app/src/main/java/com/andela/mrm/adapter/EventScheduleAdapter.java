@@ -1,5 +1,8 @@
 package com.andela.mrm.adapter;
 
+import java.text.DateFormat;
+import java.util.TimeZone;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +16,10 @@ import android.widget.TextView;
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.room_availability.models.CalendarEvent;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by andeladeveloper on 27/04/2018.
@@ -120,6 +121,9 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
          */
         duration;
 
+        public View availabilityIndicator;
+        public Boolean isMinute = false;
+
         /**
          * Instantiates a new View holder.
          *
@@ -130,6 +134,8 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
             eventTitle = itemView.findViewById(R.id.text_event_title);
             startTime = itemView.findViewById(R.id.text_meeting_time);
             duration = itemView.findViewById(R.id.text_event_duration);
+            availabilityIndicator = itemView.findViewById(R.id.view_indicator);
+
         }
 
         /**
@@ -138,13 +144,35 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
          * @param position the position
          */
         public void setValue(int position) {
-            Long end = calendarEvents.get(position).getEndTime();
-            Long start  = calendarEvents.get(position).getStartTime();
+            String extension;
 
-            Long diff = end - start;
-            eventTitle.setText(calendarEvents.get(position).getSummary());
-            startTime.setText(formatTime(start, "GMT+1", false));
-            duration.setText(formatTime(diff, "GMT+1", true) + " hrs");
+            if (calendarEvents.get(position).getEndTime() == null) {
+                duration.setText("All day");
+                eventTitle.setText("Free Till End Of Day");
+                startTime.setText(formatTime(calendarEvents.get(position).getStartTime(),
+                        "GMT+1", false));
+            } else {
+                Long end = calendarEvents.get(position).getEndTime();
+                Long start  = calendarEvents.get(position).getStartTime();
+
+                Long diff = end - start;
+                eventTitle.setText(calendarEvents.get(position).getSummary());
+                startTime.setText(formatTime(start, "GMT+1", false));
+                String format = formatTime(diff, "GMT", true);
+
+                if (isMinute) {
+                    extension = "minute(s)";
+                } else {
+                    extension = "hr(s)";
+                }
+                duration.setText(format + extension);
+            }
+
+            if ("Available".equals(calendarEvents.get(position).getSummary())) {
+                availabilityIndicator.setBackgroundColor(Color.GREEN);
+            } else {
+                availabilityIndicator.setBackgroundColor(Color.RED);
+            }
 
         }
 
@@ -158,14 +186,21 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
          */
         public String formatTime(Long timeValue, String timeZone, Boolean isTimeDiff) {
             DateFormat format;
-            Date time = new Date(timeValue);
+            Long hour = 3600000L;
+            Date date = new Date(timeValue);
             if (isTimeDiff) {
-                format = new SimpleDateFormat("h:mm", Locale.getDefault());
+                if (timeValue < hour) {
+                    format = new SimpleDateFormat("mm ", Locale.getDefault());
+                    isMinute = true;
+                } else {
+                    format = new SimpleDateFormat("h:mm ", Locale.getDefault());
+                    isMinute = false;
+                }
             } else {
-                format = new SimpleDateFormat("h:mm a ", Locale.getDefault());
+                format = new SimpleDateFormat("h:mm a", Locale.getDefault());
             }
             format.setTimeZone(TimeZone.getTimeZone(timeZone));
-            return format.format(time);
+            return format.format(date);
         }
 
     }

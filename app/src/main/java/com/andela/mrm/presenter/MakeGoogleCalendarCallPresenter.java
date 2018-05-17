@@ -3,6 +3,7 @@ package com.andela.mrm.presenter;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.andela.mrm.contract.IGoogleCalenderCallListener;
 import com.andela.mrm.room_booking.room_availability.models.CalendarEvent;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -16,6 +17,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -25,7 +29,7 @@ import java.util.List;
 public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<Event>> {
     private final com.google.api.services.calendar.Calendar mService;
     private Exception mLastError = null;
-    private final IMakeRequestTaskListener makeRequestTaskListener;
+    private final IGoogleCalenderCallListener googleCalenderCallListener;
 
     /**
      * Instantiates a new Make request task.
@@ -34,33 +38,14 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
      * @param makeRequestTaskListener the make request task listener
      */
     public MakeGoogleCalendarCallPresenter(GoogleAccountCredential credential,
-                                           IMakeRequestTaskListener makeRequestTaskListener) {
-        this.makeRequestTaskListener = makeRequestTaskListener;
+                                           IGoogleCalenderCallListener makeRequestTaskListener) {
+        this.googleCalenderCallListener = makeRequestTaskListener;
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         mService = new com.google.api.services.calendar.Calendar.Builder(
                 transport, jsonFactory, credential)
                 .setApplicationName("Google Calendar API Android Quickstart")
                 .build();
-    }
-
-    /**
-     * The interface Make request task listener.
-     */
-    public interface IMakeRequestTaskListener {
-        /**
-         * On success.
-         *
-         * @param itemsInString the items in string
-         */
-        void onSuccess(String itemsInString);
-
-        /**
-         * On cancelled.
-         *
-         * @param mLastError the m last error
-         */
-        void onCancelled(Exception mLastError);
     }
 
     /**
@@ -87,12 +72,23 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
      */
     private List<Event> getDataFromApi() throws IOException {
         // List the next 10 events from the primary calendar.
+
         List<Event> items;
         List<CalendarEvent> calendarEvents = new ArrayList<>();
         DateTime now = new DateTime(System.currentTimeMillis());
+
+        /**
+         * This part is to get the midnight of current day.
+         */
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Date midnight = calendar.getTime();
+
         Events events = mService.events().list("primary")
-                .setMaxResults(10)
                 .setTimeMin(now)
+                .setTimeMax(new DateTime(midnight.getTime())) // We need the midnight here
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute();
@@ -116,8 +112,8 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
         }
 
         String listItemInGson = new Gson().toJson(calendarEvents);
-        if (makeRequestTaskListener != null) {
-            makeRequestTaskListener.onSuccess(listItemInGson);
+        if (googleCalenderCallListener != null) {
+            googleCalenderCallListener.onSuccess(listItemInGson);
         }
         return items;
     }
@@ -141,8 +137,8 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
 
     @Override
     protected void onCancelled() {
-        if (makeRequestTaskListener != null) {
-            makeRequestTaskListener.onCancelled(mLastError);
+        if (googleCalenderCallListener != null) {
+            googleCalenderCallListener.onCancelled(mLastError);
         }
     }
 }

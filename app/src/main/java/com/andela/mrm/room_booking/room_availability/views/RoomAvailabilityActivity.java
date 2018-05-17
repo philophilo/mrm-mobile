@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.andela.mrm.R;
+import com.andela.mrm.contract.IGoogleCalenderCallListener;
 import com.andela.mrm.presenter.MakeGoogleCalendarCallPresenter;
 import com.andela.mrm.util.GooglePlayService;
 import com.andela.mrm.util.NetworkConnectivityChecker;
@@ -38,8 +39,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * The type Room availability activity.
  */
 public class RoomAvailabilityActivity extends AppCompatActivity implements
-        CountDownTimerFragment.IOnTextChangeListener,
-        MakeGoogleCalendarCallPresenter.IMakeRequestTaskListener,
+        CountDownTimerFragment.IOnTextChangeListener, IGoogleCalenderCallListener,
         MeetingRoomDetailFragment.IOnStartCountDown, EasyPermissions.PermissionCallbacks {
 
     private FragmentManager fragmentManager;

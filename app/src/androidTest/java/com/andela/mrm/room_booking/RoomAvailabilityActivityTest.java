@@ -140,10 +140,7 @@
 //                .check(matches(allOf(isDisplayed(), isClickable())));
 //        onView(withId(R.id.layout_schedule))
 //                .check(matches(hasChildCount(2)))
-//                .perform(click());
-//        activityTestRule.launchActivity(new Intent());
-//        intended(hasComponent(EventScheduleActivity.class.getName()));
-//        Intents.release();
+//    }
 //
 //    }
 ////    /**
