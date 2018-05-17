@@ -6,6 +6,7 @@ apply from: rootProject.file('app/code_quality_tools/quality.gradle')
 
 android {
     compileSdkVersion 27
+    flavorDimensions "default"
     defaultConfig {
         applicationId "com.andela.mrm"
         minSdkVersion 21
@@ -25,6 +26,24 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "default"
+        }
+        prod {
+            dimension "default"
+        }
+    }
+
+    sourceSets{
+        mock {
+            java.srcDirs('src/mock/java')
+        }
+        prod {
+            java.srcDirs('src/prod/java')
         }
     }
 }

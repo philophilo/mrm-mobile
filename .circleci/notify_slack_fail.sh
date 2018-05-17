@@ -56,28 +56,25 @@ declare_env_variables() {
 /g' |  grep '\.html')"
     CIRCLE_ARTIFACTS_BUTTON="$(echo {\"type\": \"button\", \"text\": \"Checkstyle Lint Report\", \"url\": \"${CIRCLE_REPORT_ARTIFACTS}\"})"
 
-  elif [ "$CIRCLE_JOB" == 'test' ]; then
+  elif [ "$CIRCLE_JOB" == 'test_unit' ]; then
     MESSAGE_TEXT="Test Phase Failed! :scream:"
 
-    # Sorting through the artifact urls to get only the unit test and integration test reports
+    # Sorting through the arrtifact urls to get only the unit test and integration test reports
 
     DEBUG_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' |  grep 'testDebugUnitTest\/index\.html')"
+/g' | grep 'test[A-Za-z0-9]*Debug[A-Za-z0-9]*\/index\.html')"
     RELEASE_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' |  grep 'testReleaseUnitTest\/index\.html')"
+/g' | grep 'test[A-Za-z0-9]*Release[A-Za-z0-9]*\/index\.html')"
     JACOCO_DEBUG_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' |  grep 'jacocoTestDebugUnitTestReport\/html\/index\.html')"
+/g' | grep 'jacoco[A-Za-z0-9]*Debug[A-Za-z0-9]*\/html\/index\.html')"
     JACOCO_RELEASE_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' |  grep 'jacocoTestReleaseUnitTestReport\/html\/index\.html')"
-    INTEGRATION_TEST_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' |  grep 'AVD')"
+/g' | grep 'jacoco[A-Za-z0-9]*Release[A-Za-z0-9]*\/html\/index\.html')"
 
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
         "{\"type\": \"button\", \"text\": \"Unit Test Report (Debug)\", \"url\": \"${DEBUG_REPORT}\"}", \
         "{\"type\": \"button\", \"text\": \"Unit Test Report (Release)\", \"url\": \"${RELEASE_REPORT}\"}", \
         "{\"type\": \"button\", \"text\": \"Jacoco Test Report (Debug)\", \"url\": \"${JACOCO_DEBUG_REPORT}\"}", \
         "{\"type\": \"button\", \"text\": \"Jacoco Test Report (Release)\", \"url\": \"${JACOCO_RELEASE_REPORT}\"}", \
-        "{\"type\": \"button\", \"text\": \"Android Virtual Device (AVD) Test Report\", \"url\": \"${INTEGRATION_TEST_REPORT}\"}"
       )"
 
   elif [ "$CIRCLE_JOB" == 'deploy_test_build' ]; then
