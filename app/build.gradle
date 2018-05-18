@@ -14,9 +14,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         lintOptions {
             abortOnError false
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias rootProject.ext.keystoreProperties['keyAlias']
+            keyPassword rootProject.ext.keystoreProperties['keyPassword']
+            storeFile rootProject.file(rootProject.ext.keystoreProperties['storeFile'])
+            storePassword rootProject.ext.keystoreProperties['storePassword']
         }
     }
     buildTypes {
@@ -25,6 +34,7 @@ android {
         }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -82,4 +92,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.apollographql.apollo:apollo-http-cache:0.5.0'
     implementation "com.apollographql.apollo:apollo-android-support:0.5.0"
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
 }
+
+// apply plugin: 'com.google.gms.google-services'

@@ -11,3 +11,7 @@ instapk.log*
 instapk.properties
 .hgignore
 .idea/instapk.xml
+keystores/
+app/google-services.json
+app/src/debug/google-services.json
+app/src/release/google-services.json

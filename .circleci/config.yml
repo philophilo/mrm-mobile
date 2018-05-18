@@ -1,13 +1,73 @@
 default: &defaults
   docker:
-    - image: circleci/android:api-26-alpha
-
+  - image: circleci/android:api-26-alpha
   working_directory: ~/repo
-
   environment:
-    # Customize the JVM maximum heap limit
-    JVM_OPTS: -Xmx3200m
-    TERM: dumb
+  TERM: dumb
+  # Customize the JVM maximuum heap limit
+  _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+  GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+
+gcloud_config: &gcloud_config
+  working_directory: ~/repo
+  docker:
+    - image: google/cloud-sdk:latest
+  environment:
+  TERM: dumb
+
+workspace: &workspace
+    ~/repo
+attach_debug_workspace: &attach_debug_workspace
+  attach_workspace:
+    at: *workspace
+
+persist_firebase_workspace: &persist_firebase_workspace
+  persist_to_workspace:
+    root: *workspace
+    paths:
+      - firebase
+
+# Google Services From Firebase (JSON)
+
+export_gservices_key: &export_gservices_key
+  run:
+    name: Export Google Services key environment variable
+    command: echo 'export GOOGLE_SERVICES_JSON="$GOOGLE_SERVICES_JSON"' >> $BASH_ENV
+
+decode_gservices_key: &decode_gservices_key
+  run:
+    name: Decode Google Services JSON key
+    command: |
+      mkdir app/src/debug
+      mkdir app/src/release
+      touch app/src/debug/google-services.json
+      touch app/src/release/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/debug/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/release/google-services.json
+
+# Google Cloud Service Account Key
+
+export_gcloud_key: &export_gcloud_key
+  run:
+    name: Export Google Cloud Service Account Key Environment Variable
+    command: echo 'export GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
+  
+decode_gcloud_key: &decode_gcloud_key
+  run:
+    name: Decode Google Cloud Credentials
+    command: |
+      touch client-secret.json
+      echo $GCLOUD_SERVICE_KEY | base64 --decode >> client-secret.json
+
+persist_debug_workspace: &persist_debug_workspace
+  persist_to_workspace:
+    root: *workspace
+    paths:
+      - app/build/intermediates
+      - app/build/outputs/androidTest-results
+      - app/build/outputs/apk
+      - app/build/outputs/code-coverage
+      - app/build/test-results
 
 version: 2
 jobs:
@@ -15,6 +75,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -26,6 +91,8 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+      - *export_gservices_key
+      - *decode_gservices_key
 
       # Running static analysis tools
       - run:
@@ -55,6 +122,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -66,7 +138,8 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
+      - *export_gservices_key
+      - *decode_gservices_key
       # Running static analysis tools
       - run:
           name: Running quality checks
@@ -75,6 +148,7 @@ jobs:
             cd ~/repo
             ./gradlew assemble
             ./gradlew findbugs
+      - *persist_debug_workspace
 
       # Storing reports
       - store_artifacts:
@@ -96,6 +170,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -107,6 +186,8 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+      - *export_gservices_key
+      - *decode_gservices_key
 
       # Running static analysis tools
       - run:
@@ -122,33 +203,39 @@ jobs:
 
       # Sending notification
       - run:
-          name: Notifying slack channel (succeeded)
-          when: on_success
-          command: |
-            bash ~/repo/.circleci/notify_slack.sh
+            name: Notifying slack channel (succeeded)
+            when: on_success
+            command: |
+                bash ~/repo/.circleci/notify_slack.sh
       - run:
-          name: Notifying slack channel (failed)
-          when: on_fail
-          command: |
-            bash ~/repo/.circleci/notify_slack_fail.sh
-
+            name: Notifying slack channel (failed)
+            when: on_fail
+            command: |
+                bash ~/repo/.circleci/notify_slack_fail.sh
+                
   checkstyle_lint:
     <<: *defaults
     steps:
       - checkout
-      # Download and cache dependencies
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
+          # fallback to usiing the latest cache if no exact match is found
           - v1-dependencies-
       - run: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
+              - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+      - *export_gservices_key
+      - *decode_gservices_key
 
-      # Running static analysis tools
+        # Running static analysis tools
       - run:
           name: Running quality checks
           command: |
@@ -156,11 +243,11 @@ jobs:
             cd ~/repo
             ./gradlew checkstyle
 
-      # Storing reports
+        # Storing reports
       - store_artifacts:
           path: ~/repo/app/build/reports
 
-      # Sending notification
+        # Sending notification
       - run:
           name: Notifying slack channel (succeeded)
           when: on_success
@@ -172,15 +259,20 @@ jobs:
           command: |
             bash ~/repo/.circleci/notify_slack_fail.sh
 
-  test:
+  test_unit:
     <<: *defaults
     steps:
       - checkout
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
+          # fallback to usiing the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: ./gradlew androidDependencies
@@ -188,6 +280,8 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+      - *export_gservices_key
+      - *decode_gservices_key
 
       # Running unit tests
       - run:
@@ -196,40 +290,16 @@ jobs:
             cd ~/repo
             ./gradlew build jacocoTestReport assembleAndroidTest
             ls -a app/build/outputs/logs
-
-      # Storing unit test reports
+      
+      - *persist_debug_workspace
+      
+      #Storing unit test reports
       - store_artifacts:
           path: ~/repo/app/build/reports/jacoco
           destination: reports
       - store_artifacts:
           path: ~/repo/app/build/reports/tests
           destination: reports
-
-      # Running UI tests
-      - run:
-          name: Setup emulator
-          command: |
-            echo y | sdkmanager "system-images;android-22;default;armeabi-v7a"
-            echo no | avdmanager create avd --force --name test --abi armeabi-v7a -k "system-images;android-22;default;armeabi-v7a"
-
-      - run:
-          name: Start emulator
-          command: echo y | emulator -avd test -skin 768x1280 -no-boot-anim -no-window -accel on
-          background: true
-
-      - run:
-          name: Wait emulator
-          command: |
-            # wait for it to have booted
-            circle-android wait-for-boot
-            # unlock the emulator screen
-            adb shell input keyevent 82
-
-      - run:
-          name: Run EspressoTests
-          command: ./gradlew connectedAndroidTest
-
-      # Storing UI test reports
       - store_artifacts:
           path: ~/repo/app/build/outputs/androidTest-results
           destination: reports
@@ -247,12 +317,18 @@ jobs:
           command: |
             bash <(curl -s https://codecov.io/bash)
             bash ~/repo/.circleci/notify_slack_fail.sh
+            
 
+  ## Build debug APK and instrumented test APK
   deploy_test_build:
     <<: *defaults
     steps:
       - checkout
-      # Download and cache dependencies
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
@@ -261,21 +337,17 @@ jobs:
       - run: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
+              - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # Building apk files for debug and release
+      - *export_gservices_key
+      - *decode_gservices_key
       - run:
-          name: Assembling apk
-          command: |
-            cd ~/repo
-            ./gradlew build
-
-      # Storing the generated apk files and reports
+          name: Gradle build (debug)
+          command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
+      - *persist_debug_workspace
       - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/debug
-      - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/release
+          path: app/build/outputs/apk/
+          destination: /apk/
       - store_artifacts:
           path: ~/repo/app/build/reports
           destination: reports
@@ -291,12 +363,15 @@ jobs:
           when: on_fail
           command: |
             bash ~/repo/.circleci/notify_slack_fail.sh
-
   deploy_staging_build:
     <<: *defaults
     steps:
       - checkout
-      # Download and cache dependencies
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
@@ -305,21 +380,17 @@ jobs:
       - run: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
+              - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # Building apk files for debug and release
+      - *export_gservices_key
+      - *decode_gservices_key
       - run:
-          name: Assembling apk
-          command: |
-            cd ~/repo
-            ./gradlew build
-
-      # Storing the generated apk files and reports
+          name: Gradle build (debug)
+          command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
+      - *persist_debug_workspace
       - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/debug
-      - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/release
+          path: app/build/outputs/apk/
+          destination: /apk/
       - store_artifacts:
           path: ~/repo/app/build/reports
           destination: reports
@@ -336,11 +407,26 @@ jobs:
           command: |
             bash ~/repo/.circleci/notify_slack_fail.sh
 
+      # Sending notification
+      - run:
+          name: Notifying slack channel on succeed
+          when: on_success
+          command: |
+            bash ~/repo/.circleci/notify_slack.sh
+      - run:
+          name: Notifying slack channel on fail
+          when: on_fail
+          command: |
+            bash ~/repo/.circleci/notify_slack_fail.sh
   deploy_production_build:
     <<: *defaults
     steps:
       - checkout
-      # Download and cache dependencies
+      # setup Keystore Environment for downloading necessary assets to use for deployment
+      - run:
+          name: Setup Keystore Environment
+          command: |
+            bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
@@ -349,25 +435,60 @@ jobs:
       - run: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
+              - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # Building apk files for debug and release
+      - *export_gservices_key
+      - *decode_gservices_key
       - run:
-          name: Assembling apk
-          command: |
-            cd ~/repo
-            ./gradlew build
-
-      # Storing the generated apk files and reports
+          name: Gradle build (debug)
+          command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
+      - *persist_debug_workspace
       - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/debug
-      - store_artifacts:
-          path: ~/repo/app/build/outputs/apk/release
+          path: app/build/outputs/apk/
+          destination: /apk/
       - store_artifacts:
           path: ~/repo/app/build/reports
           destination: reports
 
+    # Sending notification
+      - run:
+          name: Notifying slack channel on succeed
+          when: on_success
+          command: |
+            bash ~/repo/.circleci/notify_slack.sh
+      - run:
+          name: Notifying slack channel on fail
+          when: on_fail
+          command: |
+            bash ~/repo/.circleci/notify_slack_fail.sh
+
+    ## Run instrumentation tests
+  test_instrumentation:
+    <<: *gcloud_config
+    steps:
+      - checkout
+      - *attach_debug_workspace
+      - *export_gcloud_key
+      - *decode_gcloud_key
+      - run:
+          name: Set Google Cloud target project
+          command: gcloud config set project andela-learning
+      - run:
+          name: Authenticate with Google Cloud
+          command: gcloud auth activate-service-account mrm-android-editor@andela-learning.iam.gserviceaccount.com --key-file client-secret.json && gcloud firebase test android models list
+      - run:
+          name: Run instrumented test on Firebase Test Lab
+          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+      - run:
+          name: Create directory to store test results
+          command: mkdir firebase
+      - run:
+          name: Download instrumented test results from Firebase Test Lab
+          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-42q965dw0t03q-w3crkis8m06h6 | tail -1`*" /root/repo/firebase/
+      - *persist_firebase_workspace
+      - store_artifacts:
+          path: firebase/
+          destination: /firebase/
       # Sending notification
       - run:
           name: Notifying slack channel on succeed
@@ -388,7 +509,7 @@ workflows:
       - findbugs_lint
       - pmd_lint
       - checkstyle_lint
-      - test:
+      - test_unit:
           requires:
             - android_lint
             - findbugs_lint
@@ -396,19 +517,19 @@ workflows:
             - checkstyle_lint
       - deploy_test_build:
           requires:
-            - test
-          filters:
-            branches:
-              only: develop
+            - test_unit
       - deploy_staging_build:
           requires:
-            - test
+            - test_unit
           filters:
             branches:
               only: staging
       - deploy_production_build:
           requires:
-            - test
+            - test_unit
           filters:
             branches:
               only: master
+      - test_instrumentation:
+          requires:
+            - deploy_test_build
