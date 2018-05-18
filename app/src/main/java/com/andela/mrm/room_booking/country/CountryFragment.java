@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.andela.mrm.AllLocationsQuery;
 import com.andela.mrm.R;
-import com.andela.mrm.presenter.CountryPresenter;
+import com.andela.mrm.contract.RoomBookingContract;
+import com.andela.mrm.presenter.RoomBookingPresenter;
 import com.andela.mrm.room_booking.building.BuildingActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,11 +25,11 @@ import java.util.List;
 /**
  * Created by andeladeveloper on 06/04/2018.
  */
-public class CountryFragment extends Fragment implements CountryPresenter.CountryView {
+public class CountryFragment extends Fragment implements RoomBookingContract.CountryContract {
     /**
      * The Country presenter.
      */
-    CountryPresenter countryPresenter = new CountryPresenter(this);
+    RoomBookingPresenter roomBookingPresenter = new RoomBookingPresenter(this);
 
     View view;
 
@@ -75,7 +76,7 @@ public class CountryFragment extends Fragment implements CountryPresenter.Countr
         progressDialog.isIndeterminate();
         progressDialog.show();
 
-        countryPresenter.getAllLocations(new CountryPresenter.DataLoadedCallback() {
+        roomBookingPresenter.getAllLocations(this, new RoomBookingPresenter.DataLoadedCallback() {
             @Override
             public void onDataLoaded(boolean dataLoaded) {
                 if (dataLoaded) {
