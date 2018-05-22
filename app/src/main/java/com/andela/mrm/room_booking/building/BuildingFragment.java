@@ -5,38 +5,78 @@ package com.andela.mrm.room_booking.building;
  */
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
+import com.andela.mrm.AllLocationsQuery;
 import com.andela.mrm.R;
 import com.andela.mrm.adapter.BuildingAdapter;
+import com.andela.mrm.contract.RoomBookingContract;
+import com.andela.mrm.presenter.RoomBookingPresenter;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BuildingFragment extends Fragment {
+public class BuildingFragment extends Fragment implements RoomBookingContract.BuildingView {
+    View view;
+    String countryID;
+    /**
+     * The presenter.
+     */
+    RoomBookingPresenter roomPresenter = new RoomBookingPresenter(this);
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+          countryID = (String) getArguments().getSerializable(BuildingActivity.ARG_COUNTRY_ID);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        int buildingSize = Building.initializeBuildings().size();
-        int numCols = 3;
 
-        View view = inflater
+        view = inflater
                 .inflate(R.layout.fragment_building, container, false);
-        GridView gridView = view.findViewById(R.id.building_grid_view);
-        BuildingAdapter buildingAdapter = new BuildingAdapter(getContext(),
-                Building.initializeBuildings());
+        roomPresenter.getAllLocations(this, null, countryID);
+        return view;
+    }
 
+    @Override
+    public void displayBuildings(final List<AllLocationsQuery.Block> mBlock) {
+
+       int buildingSize = mBlock.size();
+       int numCols = 3;
         if (buildingSize < 3) {
             numCols = buildingSize;
         }
-        gridView.setNumColumns(numCols);
-        gridView.setAdapter(buildingAdapter);
-        return view;
+
+        final RecyclerView mRecyclerView;
+        final RecyclerView.LayoutManager mLayoutManager;
+
+        mRecyclerView = view.findViewById(R.id.building_grid_view);
+        mRecyclerView.setHasFixedSize(true);
+        if (numCols != 0) {
+            mLayoutManager = new GridLayoutManager(getContext(), numCols);
+        } else {
+            mLayoutManager = new LinearLayoutManager(getContext());
+        }
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                RecyclerView.Adapter adapter = new BuildingAdapter(getContext(), mBlock);
+                mRecyclerView.setAdapter(adapter);
+            }
+        });
     }
 }

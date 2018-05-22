@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/floor_text"
-        android:layout_width="679dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"

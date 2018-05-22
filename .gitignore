@@ -15,3 +15,5 @@ keystores/
 app/google-services.json
 app/src/debug/google-services.json
 app/src/release/google-services.json
+debug/google-services.json
+release/google-services.json

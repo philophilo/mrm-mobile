@@ -3,6 +3,7 @@ package com.andela.mrm.presenter;
 import android.support.v4.app.Fragment;
 
 import com.andela.mrm.AllLocationsQuery;
+import com.andela.mrm.room_booking.building.BuildingFragment;
 import com.andela.mrm.room_booking.country.CountryFragment;
 import com.andela.mrm.service.MyApolloClient;
 import com.andela.mrm.util.NetworkConnectivityChecker;
@@ -11,13 +12,16 @@ import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * RoomBookingPresenter class.
  */
 
 public class RoomBookingPresenter {
+
     public CountryFragment view;
+    public BuildingFragment mView;
 
     /**
      * RoomBookingPresenter class constructor method.
@@ -30,13 +34,23 @@ public class RoomBookingPresenter {
     }
 
     /**
-     * Class method for querying graphQL api endpoint through the apollo client.
+     * RoomBookingPresenter class constructor method.
      *
-     * @param currentFragment    - current fragment in view
+     * @param mView - fragment view context
+     */
+    public RoomBookingPresenter(BuildingFragment mView) {
+        this.mView = mView;
+    }
+
+    /**
+     * Class method for querying graphQL api endpoint through the apollo client.
+     *  @param currentFragment    - current fragment in view
      * @param dataLoadedCallback - callback interface
+     * @param countryID  - current building id
      */
     public void getAllLocations(Fragment currentFragment,
-                                final DataLoadedCallback dataLoadedCallback) {
+                                 @Nullable final DataLoadedCallback dataLoadedCallback,
+                                @Nullable final String countryID) {
 
         MyApolloClient.getMyApolloClient(currentFragment.getContext())
                 .query(AllLocationsQuery.builder().build())
@@ -44,9 +58,15 @@ public class RoomBookingPresenter {
                     @Override
                     public void onResponse(@Nonnull Response<AllLocationsQuery.Data> response) {
 
-                        view.displayCountries(response.data().allLocations());
+                        if (view != null) {
+                            view.displayCountries(response.data().allLocations());
+                            dataLoadedCallback.onDataLoaded(true);
+                        }
 
-                        dataLoadedCallback.onDataLoaded(true);
+                        if (mView != null) {
+                            mView.displayBuildings(response.data().allLocations()
+                                    .get(Integer.parseInt(countryID)).blocks());
+                        }
                     }
 
                     @Override

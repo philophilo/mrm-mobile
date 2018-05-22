@@ -33,4 +33,15 @@ public interface RoomBookingContract {
          */
         void displaySnackBar(Boolean isNetworkAvailable);
     }
+
+    /**
+     * Interface binding/connecting the RoomBookingPresenter class to its building view class.
+     */
+    interface BuildingView {
+        /**
+         *
+         * @param mBlock - number of buildings/blocks
+         */
+        void displayBuildings(List<AllLocationsQuery.Block> mBlock);
+    }
 }
