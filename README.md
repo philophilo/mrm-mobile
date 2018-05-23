@@ -1,6 +1,6 @@
 # MRM Android Application
 [![CircleCI](https://circleci.com/gh/andela/mrm-mobile/tree/chore%2F157688043%2Fintegrate-firebase-in-circleci.svg?style=svg)](https://circleci.com/gh/andela/mrm-mobile/tree/chore%2F157688043%2Fintegrate-firebase-in-circleci)
-[![codecov](https://codecov.io/gh/andela/mrm-mobile/branch/master/graph/badge.svg)](https://codecov.io/gh/andela/mrm-mobile)
+[![codecov](https://codecov.io/gh/andela/mrm-mobile/branch/chore%2F157556960%2Fgenerate_coverage_report/graph/badge.svg)](https://codecov.io/gh/andela/mrm-mobile)
 
 The MRM (Meeting Room Management) Android app.
 
