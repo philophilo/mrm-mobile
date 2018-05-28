@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by andeladeveloper on 27/04/2018.
+ * Created by Fred Adewole on 27/04/2018.
  */
 public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdapter.ViewHolder> {
     /**
