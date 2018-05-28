@@ -13,7 +13,7 @@ instapk.properties
 .idea/instapk.xml
 keystores/
 app/google-services.json
-app/src/debug/google-services.json
-app/src/release/google-services.json
-debug/google-services.json
-release/google-services.json
+app/src/mock/debug/google-services.json
+app/src/mock/release/google-services.json
+app/src/prod/debug/google-services.json
+app/src/prod/release/google-services.json

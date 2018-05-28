@@ -38,12 +38,22 @@ decode_gservices_key: &decode_gservices_key
   run:
     name: Decode Google Services JSON key
     command: |
-      mkdir app/src/debug
-      mkdir app/src/release
-      touch app/src/debug/google-services.json
-      touch app/src/release/google-services.json
-      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/debug/google-services.json
-      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/release/google-services.json
+      mkdir app/src/prod
+      mkdir app/src/mock
+      mkdir app/src/prod/release
+      mkdir app/src/prod/debug
+      mkdir app/src/mock/debug
+      mkdir app/src/mock/release
+      touch app/src/prod/release/google-services.json
+      touch app/src/prod/debug/google-services.json
+      touch app/src/mock/release/google-services.json
+      touch app/src/mock/debug/google-services.json
+      touch app/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/mock/debug/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/mock/release/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/prod/debug/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/src/prod/release/google-services.json
+      echo $GOOGLE_SERVICES_JSON | base64 --decode >> app/google-services.json
 
 # Google Cloud Service Account Key
 

@@ -4,6 +4,7 @@ apply plugin: 'com.apollographql.android'
 apply from: rootProject.file('gradle/install-git-hooks.gradle')
 apply from: rootProject.file('app/code_quality_tools/quality.gradle')
 apply from: rootProject.file('app/coverage.gradle')
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
@@ -107,6 +108,4 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
 }
 
-
-
-// apply plugin: 'com.google.gms.google-services'
+ apply plugin: 'com.google.gms.google-services'
