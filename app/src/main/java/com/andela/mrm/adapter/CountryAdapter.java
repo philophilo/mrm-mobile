@@ -62,7 +62,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), BuildingActivity.class);
                 intent.putExtra("countryID", position);
-                intent.putExtra("countryArrayList", String.valueOf(countries.get(position)));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 v.getContext().startActivity(intent);
             }

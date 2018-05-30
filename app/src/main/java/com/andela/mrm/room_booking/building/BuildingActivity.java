@@ -13,6 +13,7 @@ import com.andela.mrm.R;
 public class BuildingActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     public static final String ARG_COUNTRY_ID = "countryID";
+    public int argCountryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class BuildingActivity extends AppCompatActivity {
         //RECEIVE DATA
         Intent i = this.getIntent();
         int countryID = i.getExtras().getInt("countryID");
+        argCountryId = countryID;
         return String.valueOf(countryID);
     }
 }

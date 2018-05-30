@@ -17,3 +17,4 @@ app/src/mock/debug/google-services.json
 app/src/mock/release/google-services.json
 app/src/prod/debug/google-services.json
 app/src/prod/release/google-services.json
+app/src/debug/

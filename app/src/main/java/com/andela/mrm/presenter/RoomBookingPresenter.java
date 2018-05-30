@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.andela.mrm.AllLocationsQuery;
 import com.andela.mrm.room_booking.building.BuildingFragment;
 import com.andela.mrm.room_booking.country.CountryFragment;
+import com.andela.mrm.room_booking.floor.FloorSelectionFragment;
 import com.andela.mrm.service.MyApolloClient;
 import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.apollographql.apollo.ApolloCall;
@@ -22,6 +23,7 @@ public class RoomBookingPresenter {
 
     public CountryFragment view;
     public BuildingFragment mView;
+    public FloorSelectionFragment floorView;
 
     /**
      * RoomBookingPresenter class constructor method.
@@ -43,14 +45,24 @@ public class RoomBookingPresenter {
     }
 
     /**
+     * Room booking presenter for floor selection.
+     * @param floorView floorView.
+     */
+    public RoomBookingPresenter(FloorSelectionFragment floorView) {
+        this.floorView = floorView;
+    }
+
+    /**
      * Class method for querying graphQL api endpoint through the apollo client.
      *  @param currentFragment    - current fragment in view
      * @param dataLoadedCallback - callback interface
-     * @param countryID  - current building id
+     * @param countryID  - current country id
+     * @param buildingID - current building id
      */
     public void getAllLocations(Fragment currentFragment,
                                  @Nullable final DataLoadedCallback dataLoadedCallback,
-                                @Nullable final String countryID) {
+                                @Nullable final String countryID,
+                                @Nullable final String buildingID) {
 
         MyApolloClient.getMyApolloClient(currentFragment.getContext())
                 .query(AllLocationsQuery.builder().build())
@@ -66,6 +78,11 @@ public class RoomBookingPresenter {
                         if (mView != null) {
                             mView.displayBuildings(response.data().allLocations()
                                     .get(Integer.parseInt(countryID)).blocks());
+                        }
+                        if (floorView != null) {
+                            floorView.displayFloors(response.data().allLocations()
+                                    .get(Integer.parseInt(countryID)).blocks()
+                                    .get(Integer.parseInt(buildingID)).floors());
                         }
                     }
 

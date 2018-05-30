@@ -46,7 +46,7 @@ public class BuildingFragment extends Fragment implements RoomBookingContract.Bu
 
         view = inflater
                 .inflate(R.layout.fragment_building, container, false);
-        roomPresenter.getAllLocations(this, null, countryID);
+        roomPresenter.getAllLocations(this, null,  countryID, null);
         return view;
     }
 
@@ -74,7 +74,7 @@ public class BuildingFragment extends Fragment implements RoomBookingContract.Bu
             @Override
             public void run() {
                 mRecyclerView.setLayoutManager(mLayoutManager);
-                RecyclerView.Adapter adapter = new BuildingAdapter(getContext(), mBlock);
+                RecyclerView.Adapter adapter = new BuildingAdapter(getContext(), mBlock, countryID);
                 mRecyclerView.setAdapter(adapter);
             }
         });
