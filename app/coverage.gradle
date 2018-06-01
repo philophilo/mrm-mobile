@@ -1,0 +1,56 @@
+def coverageSourceDirs = [
+        'src/main/java',
+        'src/debug/java'
+]
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn : 'test') {
+    description = 'Generate JaCoCo coverage reports'
+    group       = 'Reporting'
+
+    reports {
+        xml.enabled  = true
+        html.enabled = true
+    }
+
+    classDirectories = fileTree(
+            dir      : 'build/intermediates/classes/mock/debug',
+            excludes : [
+                    '**/R.class',
+                    '**/R$*.class',
+                    '**/*$ViewInjector*.*',
+                    '**/*$ViewBinder*.*',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*',
+                    '**/*RealmProxy.*',
+                    '**/*ColumnInfo.*',
+                    '**/*RealmModule*.*',
+                    '**/AutoValue_*.*',
+                    '**/Dagger*.*',
+                    '**/*Module_Provide*Factory.*',
+                    '**/*_Factory.*',
+                    '**/*_MembersInjector.*',
+                    '**/*_LifecycleAdapter.*'
+            ]
+    )
+
+    sourceDirectories = files(coverageSourceDirs)
+    executionData     = fileTree(
+            dir     : "$buildDir",
+            include : [ 'jacoco/testMockDebugUnitTest.exec',
+                        'jacoco/testMockReleaseUnitTest.exec',
+                        'outputs/code-coverage/connected/flavors/MOCK/coverage.ec' ]
+    )
+
+    doFirst {
+        files('build/intermediates/classes/mock/debug').getFiles().each { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+
+}

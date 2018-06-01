@@ -91,7 +91,7 @@ public class EventScheduleActivity extends Activity {
                 }
             }
 
-            // add the last event of the day
+            // add the last event for the day
             int lastEventPosition = calendarEvents.size() - 1;
             eventListWithAvailableTimeSlots.add(
                     new CalendarEvent(calendarEvents.get(lastEventPosition).getSummary(),
@@ -102,6 +102,7 @@ public class EventScheduleActivity extends Activity {
             );
 
 //             Add an extra free event
+
             eventListWithAvailableTimeSlots.add(
                     new CalendarEvent("Available",
                             eventListWithAvailableTimeSlots.

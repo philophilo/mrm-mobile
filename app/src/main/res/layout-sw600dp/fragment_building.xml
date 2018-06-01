@@ -10,9 +10,9 @@
         android:id="@+id/building_text"
         style="@style/seven_inch"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="367dp"
-        android:layout_marginStart="365dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:gravity="center"
         android:text="@string/building_text"
@@ -22,16 +22,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/building_grid_view"
-        android:layout_width="700dp"
-        android:layout_height="358dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:numColumns="5"
+        android:layout_width="650dp"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
+        tools:listitem="@layout/partial_building_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

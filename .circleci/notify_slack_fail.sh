@@ -56,25 +56,22 @@ declare_env_variables() {
 /g' |  grep '\.html')"
     CIRCLE_ARTIFACTS_BUTTON="$(echo {\"type\": \"button\", \"text\": \"Checkstyle Lint Report\", \"url\": \"${CIRCLE_REPORT_ARTIFACTS}\"})"
 
+  elif [ "$CIRCLE_JOB" == 'test_instrumentation' ]; then
+    MESSAGE_TEXT="Instrumentation Test Failed! :scream:"
+    
   elif [ "$CIRCLE_JOB" == 'test_unit' ]; then
     MESSAGE_TEXT="Test Phase Failed! :scream:"
 
     # Sorting through the arrtifact urls to get only the unit test and integration test reports
 
     DEBUG_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' | grep 'test[A-Za-z0-9]*Debug[A-Za-z0-9]*\/index\.html')"
+/g' |  grep 'testMockDebugUnitTest\/index\.html')"
     RELEASE_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' | grep 'test[A-Za-z0-9]*Release[A-Za-z0-9]*\/index\.html')"
-    JACOCO_DEBUG_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' | grep 'jacoco[A-Za-z0-9]*Debug[A-Za-z0-9]*\/html\/index\.html')"
-    JACOCO_RELEASE_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
-/g' | grep 'jacoco[A-Za-z0-9]*Release[A-Za-z0-9]*\/html\/index\.html')"
+/g' |  grep 'testMockReleaseUnitTest\/index\.html')"
 
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
         "{\"type\": \"button\", \"text\": \"Unit Test Report (Debug)\", \"url\": \"${DEBUG_REPORT}\"}", \
         "{\"type\": \"button\", \"text\": \"Unit Test Report (Release)\", \"url\": \"${RELEASE_REPORT}\"}", \
-        "{\"type\": \"button\", \"text\": \"Jacoco Test Report (Debug)\", \"url\": \"${JACOCO_DEBUG_REPORT}\"}", \
-        "{\"type\": \"button\", \"text\": \"Jacoco Test Report (Release)\", \"url\": \"${JACOCO_RELEASE_REPORT}\"}", \
       )"
 
   elif [ "$CIRCLE_JOB" == 'deploy_test_build' ]; then
