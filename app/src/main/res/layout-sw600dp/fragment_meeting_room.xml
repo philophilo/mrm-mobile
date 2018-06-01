@@ -6,35 +6,41 @@
     tools:context="com.andela.mrm.room_booking.meeting_room.MeetingRoomFragment">
 
     <TextView
-        android:id="@+id/select_meeting_room_text"
+        android:id="@+id/text_select_meeting_room"
         style="@style/seven_inch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="367dp"
-        android:layout_marginStart="365dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
+        android:layout_marginTop="64dp"
+        android:paddingBottom="30dp"
         android:text="@string/meeting_rooms_text"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView
-        android:id="@+id/meeting_rooms_grid_view"
-        android:layout_width="832dp"
-        android:layout_height="358dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:numColumns="5"
-        android:verticalSpacing="30dp"
+    <TextView
+        android:id="@+id/text_no_meeting_room"
+        style="@style/seven_inch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dinpro"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/colorTransparentWhite"
+        android:text="@string/no_meeting_room"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_meeting_room_text"
-        app:layout_constraintVertical_bias="0.267" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/meeting_rooms_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_select_meeting_room"
+        tools:listitem="@layout/partial_meeting_room_button"/>
 
 </android.support.constraint.ConstraintLayout>

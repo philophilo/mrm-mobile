@@ -43,10 +43,12 @@ public class BuildingFragment extends Fragment implements RoomBookingContract.Bu
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         view = inflater
                 .inflate(R.layout.fragment_building, container, false);
-        roomPresenter.getAllLocations(this, null,  countryID, null);
+
+        roomPresenter.getAllLocations(this, null,
+                countryID, null, null);
+
         return view;
     }
 

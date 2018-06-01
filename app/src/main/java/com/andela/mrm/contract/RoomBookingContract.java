@@ -55,4 +55,15 @@ public interface RoomBookingContract {
          */
         void displayFloors(List<AllLocationsQuery.Floor> mFloor);
     }
+
+    /**
+     * Interface binding the RoomBookingPresenter class to its floor view class.
+     */
+    interface MeetingRoomsContract {
+        /**
+         * Display list of meeting rooms for a particular floor.
+         * @param mRooms -  list of rooms
+         */
+        void displayMeetingRooms(List<AllLocationsQuery.Room> mRooms);
+    }
 }

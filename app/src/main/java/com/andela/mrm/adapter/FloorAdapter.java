@@ -2,6 +2,7 @@ package com.andela.mrm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,16 +25,23 @@ import java.util.List;
 public class FloorAdapter extends RecyclerView.Adapter<FloorAdapter.ViewHolder> {
     public final Context context;
     private final List<AllLocationsQuery.Floor> floors;
+    final String countryId;
+    final String buildingId;
 
     /**
      * Floor adapter constructor.
      *
-     * @param context - Instance of the current context
-     * @param floors  - List of floors
+     * @param context    - Instance of the current context
+     * @param floors     - List of floors
+     * @param countryId  - id for currently selected country
+     * @param buildingId - id for currently selected building
      */
-    public FloorAdapter(Context context, List<AllLocationsQuery.Floor> floors) {
+    public FloorAdapter(Context context, List<AllLocationsQuery.Floor> floors,
+                        String countryId, String buildingId) {
         this.context = context;
         this.floors = floors;
+        this.countryId = countryId;
+        this.buildingId = buildingId;
     }
 
     /**
@@ -95,13 +103,19 @@ public class FloorAdapter extends RecyclerView.Adapter<FloorAdapter.ViewHolder> 
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(@NonNull FloorAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FloorAdapter.ViewHolder holder,
+                                 final int position) {
         final AllLocationsQuery.Floor floor = floors.get(position);
         holder.button.setText(floor.name());
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), RoomSelectionActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("countryID", countryId);
+                bundle.putString("buildingID", buildingId);
+                bundle.putString("floorID", String.valueOf(holder.getAdapterPosition()));
+                intent.putExtras(bundle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 v.getContext().startActivity(intent);
             }
