@@ -49,11 +49,13 @@ public class EventScheduleActivity extends Activity {
             List<CalendarEvent> events = new Gson().fromJson(eventsInStringFromIntent, listType);
 
             EventScheduleAdapter eventScheduleAdapter =
-                    new EventScheduleAdapter(addAvailableTimeSlots(events));
+                    new EventScheduleAdapter(addAvailableTimeSlots(events),
+                            EventScheduleActivity.this);
             RecyclerView eventScheduleRecyclerView = findViewById(R.id.layout_event_recycler_view);
             eventScheduleRecyclerView.setHasFixedSize(true);
             RecyclerView.LayoutManager eventScheduleLayoutManager =
-                    new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                    new LinearLayoutManager(this,
+                            LinearLayoutManager.HORIZONTAL, false);
             eventScheduleRecyclerView.setLayoutManager(eventScheduleLayoutManager);
             eventScheduleRecyclerView.setAdapter(eventScheduleAdapter);
 
@@ -71,7 +73,9 @@ public class EventScheduleActivity extends Activity {
         List<CalendarEvent> eventListWithAvailableTimeSlots = new ArrayList<>();
         if (calendarEvents.isEmpty()) {
             eventListWithAvailableTimeSlots.add(new CalendarEvent("Available",
-                        new DateTime(System.currentTimeMillis()).getValue(), null));
+                        new DateTime(System.currentTimeMillis()).getValue(),
+                    null, null,
+                    null));
             return eventListWithAvailableTimeSlots;
         } else {
             int size = calendarEvents.size();
@@ -82,15 +86,27 @@ public class EventScheduleActivity extends Activity {
                         > 60000) {
                     eventListWithAvailableTimeSlots.add(new CalendarEvent("Available",
                             calendarEvents.get(i).getEndTime(),
-                            calendarEvents.get(i + 1).getStartTime()));
+                            calendarEvents.get(i + 1).getStartTime(), null,
+                            null));
                 }
             }
+
+            // add the last event of the day
+            int lastEventPosition = calendarEvents.size() - 1;
+            eventListWithAvailableTimeSlots.add(
+                    new CalendarEvent(calendarEvents.get(lastEventPosition).getSummary(),
+                            calendarEvents.get(lastEventPosition).getStartTime(),
+                            calendarEvents.get(lastEventPosition).getEndTime(),
+                            calendarEvents.get(lastEventPosition).getAttendees(),
+                            calendarEvents.get(lastEventPosition).getCreator())
+            );
+
 //             Add an extra free event
             eventListWithAvailableTimeSlots.add(
                     new CalendarEvent("Available",
                             eventListWithAvailableTimeSlots.
                                     get(eventListWithAvailableTimeSlots.size() - 1).getEndTime(),
-                            null));
+                            null, null, null));
             return eventListWithAvailableTimeSlots;
         }
 

@@ -28,24 +28,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-        mock {
-            applicationIdSuffix = ".mock"
-            dimension "default"
-        }
-        prod {
-            dimension "default"
-        }
-    }
-
-    sourceSets{
-        mock {
-            java.srcDirs('src/mock/java')
-        }
-        prod {
-            java.srcDirs('src/prod/java')
-        }
-    }
+//    productFlavors {
+//        mock {
+//            applicationIdSuffix = ".mock"
+//            dimension "default"
+//        }
+//        prod {
+//            dimension "default"
+//        }
+//    }
+//
+//    sourceSets{
+//        mock {
+//            java.srcDirs('src/mock/java')
+//        }
+//        prod {
+//            java.srcDirs('src/prod/java')
+//        }
+//    }
 }
 
 dependencies {

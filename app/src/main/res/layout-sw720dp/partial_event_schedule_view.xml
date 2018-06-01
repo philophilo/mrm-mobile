@@ -84,11 +84,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.867"
-                app:layout_constraintStart_toEndOf="@+id/layout_attendee_images" />
+                app:layout_constraintStart_toEndOf="@+id/text_attendees" />
 
-            <LinearLayout
-                android:id="@+id/layout_attendee_images"
-                android:layout_width="84dp"
+            <TextView
+                android:id="@+id/text_attendees"
+                android:layout_width="wrap_content"
                 android:layout_height="31dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
