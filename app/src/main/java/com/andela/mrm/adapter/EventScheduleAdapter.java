@@ -34,6 +34,9 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
      * The Calendar events.
      */
     public final List<CalendarEvent> calendarEvents;
+    /**
+     * The Context.
+     */
     public final Context context;
 
 
@@ -128,16 +131,34 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
         startTime, /**
          * The Duration.
          */
-        duration, noOfAttendeesView;
+        duration, /**
+         * The No of attendees view.
+         */
+        noOfAttendeesView;
+        /**
+         * The Attendees recycler view.
+         */
         RecyclerView attendeesRecyclerView;
 
         /**
          * The Static image participants.
          */
-        public ImageView staticImageParticipants, closeRecyclerView;
+        public ImageView staticImageParticipants, /**
+         * The Close recycler view.
+         */
+        closeRecyclerView;
 
+        /**
+         * The Availability indicator.
+         */
         public View availabilityIndicator;
+        /**
+         * The Is minute.
+         */
         public Boolean isMinute = false;
+        /**
+         * The Constraint layout.
+         */
         public ConstraintLayout constraintLayout;
 
         /**
@@ -180,22 +201,14 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
                     noOfAttendeesView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            attendeesRecyclerView.setVisibility(View.VISIBLE);
-                            closeRecyclerView.setVisibility(View.VISIBLE);
-                            noOfAttendeesView.setText(calendarEvents.get(position).getCreator());
-                            constraintLayout.
-                                    setBackgroundColor(Color.parseColor("#FFFF5359"));
+                            showAttendees(position);
                         }
                     });
 
                     closeRecyclerView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            attendeesRecyclerView.setVisibility(View.GONE);
-                            closeRecyclerView.setVisibility(View.GONE);
-                            noOfAttendeesView.setText(new StringBuilder().append(noOfAttendees)
-                                    .append(" Participants").toString());
-                            constraintLayout.setBackgroundColor(Color.WHITE);
+                        hideAttendees(noOfAttendees);
                         }
                     });
 
@@ -258,5 +271,40 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
             return format.format(date);
         }
 
+        /**
+         * Modify layout to display attendees.
+         *
+         * @param position the position.
+         */
+        public void showAttendees(int position) {
+            availabilityIndicator.setVisibility(View.GONE);
+            eventTitle.setTextColor(Color.WHITE);
+            duration.setTextColor(Color.WHITE);
+            noOfAttendeesView.setTextColor(Color.WHITE);
+            attendeesRecyclerView.setVisibility(View.VISIBLE);
+            closeRecyclerView.setVisibility(View.VISIBLE);
+            staticImageParticipants.setVisibility(View.GONE);
+            noOfAttendeesView.setText(calendarEvents.get(position).getCreator());
+            constraintLayout.
+                    setBackgroundColor(Color.parseColor("#FFFF5359"));
+        }
+
+        /**
+         * Modify layout to hide attendees list.
+         *
+         * @param noOfAttendees the number of attendees.
+         */
+        public void hideAttendees(int noOfAttendees) {
+            availabilityIndicator.setVisibility(View.VISIBLE);
+            eventTitle.setTextColor(Color.BLACK);
+            duration.setTextColor(Color.BLACK);
+            noOfAttendeesView.setTextColor(Color.BLUE);
+            attendeesRecyclerView.setVisibility(View.GONE);
+            closeRecyclerView.setVisibility(View.GONE);
+            staticImageParticipants.setVisibility(View.VISIBLE);
+            noOfAttendeesView.setText(new StringBuilder().append(noOfAttendees)
+                    .append(" Participants").toString());
+            constraintLayout.setBackgroundColor(Color.WHITE);
+        }
     }
 }
