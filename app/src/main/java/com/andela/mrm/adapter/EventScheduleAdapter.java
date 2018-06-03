@@ -229,9 +229,9 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
                 String format = formatTime(diff, "GMT", true);
 
                 if (isMinute) {
-                    extension = "minute(s)";
+                    extension = "min";
                 } else {
-                    extension = "hr(s)";
+                    extension = "hr";
                 }
                 duration.setText(format + extension);
             }
