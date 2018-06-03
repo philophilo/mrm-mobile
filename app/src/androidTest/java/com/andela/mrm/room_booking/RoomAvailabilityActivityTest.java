@@ -139,28 +139,28 @@
 //        onView(withId(R.id.layout_schedule))
 //                .check(matches(allOf(isDisplayed(), isClickable())));
 //        onView(withId(R.id.layout_schedule))
-//                .check(matches(hasChildCount(2)))
+//                .check(matches(hasChildCount(2)));
 //    }
 //
+//    /**
+//     * Schedule button displays another activity.
+//     */
+//    @Test
+//    public void scheduleButtonDisplaysAnotherActivity() {
+//        Intents.init();
+//        onView(withId(R.id.layout_schedule))
+//                .check(matches(isDisplayed()))
+//                .perform((click()));
+//        onView(allOf(withId(R.id.layout_event_recycler_view)))
+//                .check(matches(isDisplayed()));
+//        onView(withText("Today"))
+//                .check(matches(isDisplayed()));
+//        onView(withId(R.id.layout_close_event_schedule))
+//                .check(matches(isDisplayed()))
+//                .perform(click());
+//        activityTestRule.launchActivity(new Intent());
+//        intended(hasComponent(EventScheduleActivity.class.getName()));
+//        Intents.release();
 //    }
-////    /**
-////     * Schedule button displays another activity.
-////     */
-////    @Test
-////    public void scheduleButtonDisplaysAnotherActivity() {
-////        Intents.init();
-////        onView(withId(R.id.layout_schedule))
-////                .check(matches(isDisplayed()))
-////                .perform((click()));
-////        onView(allOf(withId(R.id.layout_event_recycler_view)))
-////                .check(matches(isDisplayed()));
-////        onView(withText("Today"))
-////                .check(matches(isDisplayed()));
-////        onView(withId(R.id.layout_close_event_schedule))
-////                .check(matches(isDisplayed()))
-////                .perform(click());
-////        activityTestRule.launchActivity(new Intent());
-////        intended(hasComponent(EventScheduleActivity.class.getName()));
-////        Intents.release();
 ////    }
 //}

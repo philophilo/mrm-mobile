@@ -4,7 +4,6 @@ package com.andela.mrm.adapter;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,8 +84,6 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
          */
         public void setValue(int position) {
             mEmailView.setText(eventAttendees.get(position).getEmail());
-            Log.e("Attendees email", eventAttendees.get(position).getEmail());
-            Log.e("Response", eventAttendees.get(position).getResponseStatus());
             if ("accepted".equals(eventAttendees.get(position).getResponseStatus())) {
                 mImageResponse.setImageResource(R.drawable.icon_accepted);
             } else if ("declined".equals(eventAttendees.get(position).getResponseStatus())) {
