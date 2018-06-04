@@ -2,6 +2,7 @@ package com.andela.mrm.service;
 
 import android.content.Context;
 
+import com.andela.mrm.room_setup.data.SetupPage;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Operation;
 import com.apollographql.apollo.api.ResponseField;
@@ -19,31 +20,38 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
- * Created by baron on 18/04/2018.
+ * The type My apollo client.
  */
-
 public final class MyApolloClient {
 
+    /**
+     * The constant INSTANCE.
+     */
+    public static final MyApolloClient INSTANCE = new MyApolloClient();
     private static final String BASE_URL =
             "https://api.graph.cool/simple/v1/cjgdrz83r1t4k0173p13insaj";
-    private static ApolloClient myApolloClient;
+    private ApolloClient mApolloClient;
+    private SetupPage mCurrentSetupPage = SetupPage.COUNTRY;
+
+    private int mSelectedCountryIndex;
+    private int mSelectedBuildingIndex;
+    private int mSelectedFloorIndex;
+
 
     /**
-     * private constructor.
-     * prevent instantiation
+     * Private constructor for this class.
      */
     private MyApolloClient() {
 
     }
 
     /**
-     * Apollo client implementation method.
+     * Gets my apollo client.
      *
-     * @param context - current application view context
-     *
-     * @return expected myApolloClient object.
+     * @param context the context
+     * @return the my apollo client
      */
-    public static ApolloClient getMyApolloClient(Context context) {
+    public ApolloClient getMyApolloClient(Context context) {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -82,13 +90,87 @@ public final class MyApolloClient {
             }
         };
 
-        myApolloClient = ApolloClient.builder()
+        mApolloClient = ApolloClient.builder()
                 .serverUrl(BASE_URL)
                 .normalizedCache(sqlCacheFactory, resolver)
                 .okHttpClient(okHttpClient)
                 .build();
 
-        return myApolloClient;
+        return mApolloClient;
 
+    }
+
+
+    /**
+     * Gets current setup page.
+     *
+     * @return the current setup page
+     */
+    public SetupPage getCurrentSetupPage() {
+        return mCurrentSetupPage;
+    }
+
+    /**
+     * Sets current setup page.
+     *
+     * @param currentSetupPage the current setup page
+     */
+    public void setCurrentSetupPage(SetupPage currentSetupPage) {
+        mCurrentSetupPage = currentSetupPage;
+    }
+
+
+    /**
+     * Gets selected country index.
+     *
+     * @return the selected country index
+     */
+    public int getSelectedCountryIndex() {
+        return mSelectedCountryIndex;
+    }
+
+    /**
+     * Sets selected country index.
+     *
+     * @param selectedCountryIndex the selected country index
+     */
+    public void setSelectedCountryIndex(int selectedCountryIndex) {
+        mSelectedCountryIndex = selectedCountryIndex;
+    }
+
+    /**
+     * Gets selected building index.
+     *
+     * @return the selected building index
+     */
+    public int getSelectedBuildingIndex() {
+        return mSelectedBuildingIndex;
+    }
+
+    /**
+     * Sets selected building index.
+     *
+     * @param selectedBuildingIndex the selected building index
+     */
+    public void setSelectedBuildingIndex(int selectedBuildingIndex) {
+        mSelectedBuildingIndex = selectedBuildingIndex;
+    }
+
+    /**
+     * Gets selected floor index.
+     *
+     * @return the selected floor index
+     */
+    public int getSelectedFloorIndex() {
+        return mSelectedFloorIndex;
+    }
+
+    /**
+     * Sets selected floor index.
+     *
+     * @param selectedFloorIndex the selected floor index
+     */
+    public void setSelectedFloorIndex(int selectedFloorIndex) {
+        mSelectedFloorIndex = selectedFloorIndex;
     }
 }

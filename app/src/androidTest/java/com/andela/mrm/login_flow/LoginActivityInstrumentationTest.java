@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.andela.mrm.R;
-import com.andela.mrm.room_booking.country.CountryActivity;
+import com.andela.mrm.room_setup.RoomSetupActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -54,6 +54,55 @@ public class LoginActivityInstrumentationTest {
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule =
             new ActivityTestRule<>(LoginActivity.class);
+
+    /**
+     * Returns a matcher that matches {@link ViewGroup}s based on targeted view hierarchy(position).
+     *
+     * @param parentMatcher - the current parent view target
+     * @param position      - position of the view in hierarchy
+     * @return boolean
+     */
+    private static Matcher<View> childAtPosition(
+            final Matcher<View> parentMatcher, final int position) {
+
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                        && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
+
+    /**
+     * Returns a matcher that matches {@link ViewPager}s based on currentItem property value.
+     *
+     * @param page {@link Matcher} of ViewPager's currentItem
+     * @return boolean
+     */
+    @NonNull
+    public static Matcher<View> inPage(final int page) {
+
+        return new BoundedMatcher<View, ViewPager>(ViewPager.class) {
+
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("in page: " + page);
+            }
+
+            @Override
+            public boolean matchesSafely(final ViewPager viewPager) {
+                return viewPager.getCurrentItem() == page;
+            }
+        };
+    }
 
     /**
      * Test case that describes/tests for the visibility(properly loaded) of the LoginActivity.
@@ -171,58 +220,9 @@ public class LoginActivityInstrumentationTest {
 
         mActivityTestRule.launchActivity(new Intent());
 
-        intended(hasComponent(CountryActivity.class.getName())); // checks that the CountryActivity
-                                                                 // is launched
+        // checks that the CountryActivity is launched
+        intended(hasComponent(RoomSetupActivity.class.getName()));
 
         Intents.release();
-    }
-
-    /**
-     * Returns a matcher that matches {@link ViewGroup}s based on targeted view hierarchy(position).
-     *
-     * @param parentMatcher - the current parent view target
-     * @param position      - position of the view in hierarchy
-     * @return boolean
-     */
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
-    }
-
-    /**
-     * Returns a matcher that matches {@link ViewPager}s based on currentItem property value.
-     *
-     * @param page {@link Matcher} of ViewPager's currentItem
-     * @return boolean
-     */
-    @NonNull
-    public static Matcher<View> inPage(final int page) {
-
-        return new BoundedMatcher<View, ViewPager>(ViewPager.class) {
-
-            @Override
-            public void describeTo(final Description description) {
-                description.appendText("in page: " + page);
-            }
-
-            @Override
-            public boolean matchesSafely(final ViewPager viewPager) {
-                return viewPager.getCurrentItem() == page;
-            }
-        };
     }
 }

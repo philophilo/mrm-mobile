@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.andela.mrm.R;
-import com.andela.mrm.room_booking.country.CountryActivity;
+import com.andela.mrm.room_setup.RoomSetupActivity;
 
 /**
  * A {@link Fragment} subclass.
@@ -26,7 +26,7 @@ public class LoginButtonFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CountryActivity.class);
+                Intent intent = new Intent(getContext(), RoomSetupActivity.class);
                 startActivity(intent);
             }
         });

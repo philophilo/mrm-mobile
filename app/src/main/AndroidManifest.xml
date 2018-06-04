@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".room_setup.RoomSetupActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".room_booking.meeting_room.RoomSelectionActivity"
             android:screenOrientation="landscape" />
         <activity

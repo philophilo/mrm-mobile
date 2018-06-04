@@ -64,7 +64,7 @@ public class RoomBookingPresenter {
                                 @Nullable final String countryID,
                                 @Nullable final String buildingID) {
 
-        MyApolloClient.getMyApolloClient(currentFragment.getContext())
+        MyApolloClient.INSTANCE.getMyApolloClient(currentFragment.getContext())
                 .query(AllLocationsQuery.builder().build())
                 .enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
                     @Override
