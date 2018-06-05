@@ -43,9 +43,8 @@ public class RoomSelectionActivity extends AppCompatActivity {
      */
     public void getValues() {
         Intent intent = this.getIntent();
-        countryID = intent.getExtras().getString("countryID");
-        buildingID = intent.getExtras().getString("buildingID");
-        floorID = intent.getExtras().getString("floorID");
+        countryID = intent.getStringExtra("countryID");
+        buildingID = intent.getStringExtra("buildingID");
+        floorID = intent.getStringExtra("floorID");
     }
-
 }

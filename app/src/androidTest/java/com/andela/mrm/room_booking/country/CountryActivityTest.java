@@ -44,9 +44,12 @@ public class CountryActivityTest {
 
     /**
      * Runs before each test case, to register the espresso idling resource.
+     *
+     * @throws Exception - throws an exception error when method fails
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -90,7 +93,7 @@ public class CountryActivityTest {
 
     /**
      * Teardown method.
-     * @throws Exception - Exception
+     *
      * Runs after each test case, to unregister the espresso idling resource.
      */
     @After
