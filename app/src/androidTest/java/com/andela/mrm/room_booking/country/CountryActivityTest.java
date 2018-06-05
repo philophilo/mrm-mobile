@@ -1,13 +1,17 @@
 package com.andela.mrm.room_booking.country;
 
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.andela.mrm.R;
+import com.andela.mrm.presenter.RoomBookingPresenter;
 import com.andela.mrm.room_booking.building.BuildingActivity;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +43,15 @@ public class CountryActivityTest {
             new ActivityTestRule<>(CountryActivity.class);
 
     /**
+     * Setup method.
+     * @throws Exception - Exception
+     */
+    @Before
+    public void setUp() throws Exception {
+        IdlingRegistry.getInstance().register(RoomBookingPresenter.getIdlingResource());
+    }
+
+    /**
      * Country setup page header text is visible.
      */
     @Test
@@ -52,7 +65,7 @@ public class CountryActivityTest {
      */
     @Test
     public void expectedRecyclerViewItemsAreDisplayed() {
-        String[] expectedCountries = new String[] {"Kenya", "Nigeria", "Uganda"};
+        String[] expectedCountries = new String[]{"Kenya", "Nigeria", "Uganda"};
 
         for (String country : expectedCountries) {
             onView(withText(country)).check(matches(isDisplayed()));
@@ -74,5 +87,14 @@ public class CountryActivityTest {
                 hasExtra(equalTo("countryID"), equalTo(mockPosition))
         ));
         Intents.release();
+    }
+
+    /**
+     * Teardown method.
+     * @throws Exception - Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        IdlingRegistry.getInstance().unregister(RoomBookingPresenter.getIdlingResource());
     }
 }
