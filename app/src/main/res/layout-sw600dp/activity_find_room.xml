@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.andela.mrm.room_booking.room_availability.views.FindRoomActivity">
+
+    <TextView
+        style="@style/seven_inch"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Find Available Room"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/close_find_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_close_find_room"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_filters"
+        android:layout_width="745dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/filters_background"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/filter_availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                style="@style/seven_inch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Availability"
+                android:textAlignment="textEnd"
+                android:textColor="#FF3359DB"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/dropdown_availability_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_expand_more_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/filter_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                style="@style/seven_inch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Location"
+                android:textAlignment="textEnd"
+                android:textColor="#FF3359DB"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/dropdown_location_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_expand_more_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/filter_capacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                style="@style/seven_inch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Capacity"
+                android:textAlignment="textEnd"
+                android:textColor="#FF3359DB"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/dropdown_capacity_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_expand_more_black_24dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/filter_amenities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                style="@style/seven_inch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Amenities"
+                android:textAlignment="textEnd"
+                android:textColor="#FF3359DB"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/dropdown_amenities_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_expand_more_black_24dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_filter_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_clear_filters"
+        style="@style/seven_inch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Clear Filters"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_filters_display"
+        app:layout_constraintStart_toEndOf="@+id/layout_filters_display"
+        app:layout_constraintTop_toTopOf="@+id/layout_filters_display" />
+
+    <TextView
+        android:id="@+id/text_result_count"
+        style="@style/seven_inch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:text="Available Rooms (8)"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view_filter_result"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_filter_result" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/layout_filters_display"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/layout_filters"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="@+id/layout_filters"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filters" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_dropdown_availability"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/partial_filter_dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/layout_filters"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filters" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_dropdown_location"
+        android:layout_width="173dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="196dp"
+        android:background="@drawable/partial_filter_dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/layout_filters"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filters" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_dropdown_capacity"
+        android:layout_width="169dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="380dp"
+        android:background="@drawable/partial_filter_dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/layout_filters"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filters" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_dropdown_amenities"
+        android:layout_width="184dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="560dp"
+        android:background="@drawable/partial_filter_dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/layout_filters"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filters" />
+
+
+</android.support.constraint.ConstraintLayout>

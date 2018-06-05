@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.andela.mrm.R;
@@ -43,7 +44,8 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         MeetingRoomDetailFragment.IOnStartCountDown, EasyPermissions.PermissionCallbacks {
 
     private FragmentManager fragmentManager;
-    private LinearLayout roomSchedule;
+    private LinearLayout roomSchedule, findRoomLayout;
+
     /**
      * The Items.
      */
@@ -93,8 +95,11 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_room_availability);
 
         roomSchedule = findViewById(R.id.layout_schedule);
+        findRoomLayout = findViewById(R.id.layout_find_room);
 
         setRoomScheduleOnClickListener(null);
+        setFindRoomLayoutListener();
+
 
         playService = new GooglePlayService();
         fragmentManager = getSupportFragmentManager();
@@ -347,6 +352,20 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
                     Log.e("Data in sender", eventsInString);
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    /**
+     * sets findRoomLayout Listener.
+     */
+    public void setFindRoomLayoutListener() {
+        findRoomLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomAvailabilityActivity.this,
+                        FindRoomActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -3,7 +3,7 @@
     package="com.andela.mrm">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
@@ -35,12 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".room_booking.room_availability.views.RoomAvailabilityActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".room_booking.room_availability.views.RoomAvailabilityActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".room_booking.room_availability.views.EventScheduleActivity"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".room_booking.room_availability.views.FindRoomActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Transparent"/>
     </application>
 
 </manifest>
