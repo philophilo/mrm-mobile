@@ -2,14 +2,18 @@ package com.andela.mrm.adapter;
 
 import java.text.DateFormat;
 import java.util.TimeZone;
+
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
  * Created by Fred Adewole on 27/04/2018.
  */
@@ -29,14 +34,21 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
      * The Calendar events.
      */
     public final List<CalendarEvent> calendarEvents;
+    /**
+     * The Context.
+     */
+    public final Context context;
+
 
     /**
      * Instantiates a new Event schedule adapter.
      *
-     * @param events the events
+     * @param events  the events
+     * @param context the context
      */
-    public EventScheduleAdapter(List<CalendarEvent> events) {
+    public EventScheduleAdapter(List<CalendarEvent> events, Context context) {
         this.calendarEvents = events;
+        this.context = context;
     }
 
     /**
@@ -119,10 +131,35 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
         startTime, /**
          * The Duration.
          */
-        duration;
+        duration, /**
+         * The No of attendees view.
+         */
+        noOfAttendeesView;
+        /**
+         * The Attendees recycler view.
+         */
+        RecyclerView attendeesRecyclerView;
 
+        /**
+         * The Static image participants.
+         */
+        public ImageView staticImageParticipants, /**
+         * The Close recycler view.
+         */
+        closeRecyclerView;
+
+        /**
+         * The Availability indicator.
+         */
         public View availabilityIndicator;
+        /**
+         * The Is minute.
+         */
         public Boolean isMinute = false;
+        /**
+         * The Constraint layout.
+         */
+        public ConstraintLayout constraintLayout;
 
         /**
          * Instantiates a new View holder.
@@ -135,7 +172,11 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
             startTime = itemView.findViewById(R.id.text_meeting_time);
             duration = itemView.findViewById(R.id.text_event_duration);
             availabilityIndicator = itemView.findViewById(R.id.view_indicator);
-
+            noOfAttendeesView = itemView.findViewById(R.id.text_attendees);
+            staticImageParticipants = itemView.findViewById(R.id.staticImage);
+            attendeesRecyclerView = itemView.findViewById(R.id.list_attendees_recyclerview);
+            closeRecyclerView = itemView.findViewById(R.id.close_recycler_view);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout3);
         }
 
         /**
@@ -143,7 +184,7 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
          *
          * @param position the position
          */
-        public void setValue(int position) {
+        public void setValue(final int position) {
             String extension;
 
             if (calendarEvents.get(position).getEndTime() == null) {
@@ -155,15 +196,42 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
                 Long end = calendarEvents.get(position).getEndTime();
                 Long start  = calendarEvents.get(position).getStartTime();
 
+                if (calendarEvents.get(position).getAttendees() != null) {
+                    final int noOfAttendees = calendarEvents.get(position).getAttendees().size();
+                    noOfAttendeesView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showAttendees(position);
+                        }
+                    });
+
+                    closeRecyclerView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        hideAttendees(noOfAttendees);
+                        }
+                    });
+
+                    noOfAttendeesView.setText(new StringBuilder().append(noOfAttendees)
+                            .append(" Participants").toString());
+                    staticImageParticipants.setVisibility(View.VISIBLE);
+
+                    AttendeesAdapter attendeesAdapter =
+                            new AttendeesAdapter(calendarEvents.get(position).getAttendees());
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context,
+                            LinearLayoutManager.VERTICAL, false);
+                    attendeesRecyclerView.setLayoutManager(layoutManager);
+                    attendeesRecyclerView.setAdapter(attendeesAdapter);
+                }
                 Long diff = end - start;
                 eventTitle.setText(calendarEvents.get(position).getSummary());
                 startTime.setText(formatTime(start, "GMT+1", false));
                 String format = formatTime(diff, "GMT", true);
 
                 if (isMinute) {
-                    extension = "minute(s)";
+                    extension = "min";
                 } else {
-                    extension = "hr(s)";
+                    extension = "hr";
                 }
                 duration.setText(format + extension);
             }
@@ -203,5 +271,40 @@ public class EventScheduleAdapter extends RecyclerView.Adapter<EventScheduleAdap
             return format.format(date);
         }
 
+        /**
+         * Modify layout to display attendees.
+         *
+         * @param position the position.
+         */
+        public void showAttendees(int position) {
+            availabilityIndicator.setVisibility(View.GONE);
+            eventTitle.setTextColor(Color.WHITE);
+            duration.setTextColor(Color.WHITE);
+            noOfAttendeesView.setTextColor(Color.WHITE);
+            attendeesRecyclerView.setVisibility(View.VISIBLE);
+            closeRecyclerView.setVisibility(View.VISIBLE);
+            staticImageParticipants.setVisibility(View.GONE);
+            noOfAttendeesView.setText(calendarEvents.get(position).getCreator());
+            constraintLayout.
+                    setBackgroundColor(Color.parseColor("#FFFF5359"));
+        }
+
+        /**
+         * Modify layout to hide attendees list.
+         *
+         * @param noOfAttendees the number of attendees.
+         */
+        public void hideAttendees(int noOfAttendees) {
+            availabilityIndicator.setVisibility(View.VISIBLE);
+            eventTitle.setTextColor(Color.BLACK);
+            duration.setTextColor(Color.BLACK);
+            noOfAttendeesView.setTextColor(Color.BLUE);
+            attendeesRecyclerView.setVisibility(View.GONE);
+            closeRecyclerView.setVisibility(View.GONE);
+            staticImageParticipants.setVisibility(View.VISIBLE);
+            noOfAttendeesView.setText(new StringBuilder().append(noOfAttendees)
+                    .append(" Participants").toString());
+            constraintLayout.setBackgroundColor(Color.WHITE);
+        }
     }
 }

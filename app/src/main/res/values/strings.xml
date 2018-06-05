@@ -47,4 +47,5 @@
     <string name="onBoarding_description_three">
         Give feedback on meeting rooms right from the meeting room without stepping out
     </string>
+    <string name="responseImage">response</string>
 </resources>

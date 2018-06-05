@@ -12,6 +12,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.Events;
 import com.google.gson.Gson;
 
@@ -76,6 +77,7 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
         List<Event> items;
         List<CalendarEvent> calendarEvents = new ArrayList<>();
         DateTime now = new DateTime(System.currentTimeMillis());
+        List<EventAttendee> attendees;
 
         /**
          * This part is to get the midnight of current day.
@@ -97,6 +99,9 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
         for (Event e : items) {
             DateTime start = e.getStart().getDateTime();
             DateTime end = e.getEnd().getDateTime();
+            attendees = e.getAttendees();
+            String creator = e.getCreator().getEmail();
+
 
             if (start == null) {
                 start = e.getStart().getDate();
@@ -108,7 +113,7 @@ public class MakeGoogleCalendarCallPresenter extends AsyncTask<Void, Void, List<
 
             calendarEvents.add(new CalendarEvent(e.getSummary(),
                     start.getValue(),
-                    end.getValue()));
+                    end.getValue(), attendees, creator));
         }
 
         String listItemInGson = new Gson().toJson(calendarEvents);
