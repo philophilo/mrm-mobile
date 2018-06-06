@@ -1,5 +1,6 @@
 package com.andela.mrm.room_booking.country;
 
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -7,7 +8,10 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.building.BuildingActivity;
+import com.andela.mrm.util.EspressoIdlingResource;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +41,11 @@ public class CountryActivityTest {
     @Rule
     public ActivityTestRule<CountryActivity> mCountryActivityTestRule =
             new ActivityTestRule<>(CountryActivity.class);
+
+    @Before
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
+    }
 
     /**
      * Country setup page header text is visible.
@@ -71,8 +80,17 @@ public class CountryActivityTest {
                 .actionOnItemAtPosition(mockPosition, click()));
         intended(allOf(
                 hasComponent(BuildingActivity.class.getName()),
-                hasExtra(equalTo("countryID"), equalTo(mockPosition))
+                hasExtra(equalTo("countryID"), equalTo(String.valueOf(mockPosition)))
         ));
         Intents.release();
     }
+
+    /**
+     * Runs after each test case, to unregister the espresso idling resource.
+     */
+    @After
+    public void unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
+    }
+
 }

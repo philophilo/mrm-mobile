@@ -99,8 +99,11 @@ public class BuildingActivityInstrumentationTest {
      * And tests that at least one(1) button is clicked or clickable
      */
     @Test
-    public void testForCorrectDisplayedRecyclerViewItemsAndOnClickOfAny() {
+    public void testForCorrectDisplayedRecyclerViewItemsAndOnClickOfAny() throws Exception{
         int itemCount = getCount(R.id.building_grid_view);
+
+        onView(withId(R.id.building_text))
+                .check(matches(withText("What building is this meeting room in?")));
 
         onView(withId(R.id.building_grid_view))
                 .check(matches(hasDescendant(withText("Epic Tower"))));

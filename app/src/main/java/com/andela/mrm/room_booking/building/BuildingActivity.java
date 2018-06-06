@@ -12,7 +12,6 @@ import com.andela.mrm.R;
  */
 public class BuildingActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
-    public static final String ARG_COUNTRY_ID = "countryID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
