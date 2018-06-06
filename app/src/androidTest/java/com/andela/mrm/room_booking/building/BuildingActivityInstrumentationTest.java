@@ -99,7 +99,7 @@ public class BuildingActivityInstrumentationTest {
      * And tests that at least one(1) button is clicked or clickable
      */
     @Test
-    public void testForCorrectDisplayedRecyclerViewItemsAndOnClickOfAny() throws Exception{
+    public void testForCorrectDisplayedRecyclerViewItemsAndOnClickOfAny() {
         int itemCount = getCount(R.id.building_grid_view);
 
         onView(withId(R.id.building_text))

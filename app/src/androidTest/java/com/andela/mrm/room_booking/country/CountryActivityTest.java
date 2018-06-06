@@ -42,6 +42,9 @@ public class CountryActivityTest {
     public ActivityTestRule<CountryActivity> mCountryActivityTestRule =
             new ActivityTestRule<>(CountryActivity.class);
 
+    /**
+     * Runs before each test case, to register the espresso idling resource.
+     */
     @Before
     public void setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
