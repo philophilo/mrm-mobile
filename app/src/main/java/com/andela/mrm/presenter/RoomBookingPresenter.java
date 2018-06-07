@@ -1,6 +1,5 @@
 package com.andela.mrm.presenter;
 
-import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.Fragment;
 
 import com.andela.mrm.AllLocationsQuery;
@@ -8,6 +7,7 @@ import com.andela.mrm.room_booking.building.BuildingFragment;
 import com.andela.mrm.room_booking.country.CountryFragment;
 import com.andela.mrm.room_booking.floor.FloorSelectionFragment;
 import com.andela.mrm.service.MyApolloClient;
+import com.andela.mrm.util.EspressoIdlingResource;
 import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
@@ -26,9 +26,6 @@ public class RoomBookingPresenter {
     public BuildingFragment mView;
     public FloorSelectionFragment floorView;
 
-
-    static final CountingIdlingResource IDLING_RESOURCE =
-            new CountingIdlingResource("IdlingResource");
     /**
      * RoomBookingPresenter class constructor method.
      *
@@ -57,14 +54,6 @@ public class RoomBookingPresenter {
     }
 
     /**
-     * Method for idling resource for espresso.
-     * @return IDLING_RESOURCE
-     */
-    public static CountingIdlingResource getIdlingResource() {
-        return IDLING_RESOURCE;
-    }
-
-    /**
      * Class method for querying graphQL api endpoint through the apollo client.
      *  @param currentFragment    - current fragment in view
      * @param dataLoadedCallback - callback interface
@@ -76,7 +65,8 @@ public class RoomBookingPresenter {
                                 @Nullable final String countryID,
                                 @Nullable final String buildingID) {
 
-        IDLING_RESOURCE.increment();
+        EspressoIdlingResource.increment();
+
         MyApolloClient.getMyApolloClient(currentFragment.getContext())
                 .query(AllLocationsQuery.builder().build())
                 .enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
@@ -97,18 +87,19 @@ public class RoomBookingPresenter {
                                     .get(Integer.parseInt(countryID)).blocks()
                                     .get(Integer.parseInt(buildingID)).floors());
                         }
-                        IDLING_RESOURCE.decrement();
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(@Nonnull ApolloException e) {
-                        IDLING_RESOURCE.decrement();
                         view.dismissDialog();
                         view.displaySnackBar(
                                 NetworkConnectivityChecker
                                         .isDeviceOnline(view.getContext())
                         );
                         dataLoadedCallback.onDataLoaded(false);
+
+                        EspressoIdlingResource.decrement();
                     }
                 });
 

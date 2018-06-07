@@ -7,8 +7,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.andela.mrm.R;
-import com.andela.mrm.presenter.RoomBookingPresenter;
 import com.andela.mrm.room_booking.building.BuildingActivity;
+import com.andela.mrm.util.EspressoIdlingResource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,12 +43,11 @@ public class CountryActivityTest {
             new ActivityTestRule<>(CountryActivity.class);
 
     /**
-     * Setup method.
-     * @throws Exception - Exception
+     * Runs before each test case, to register the espresso idling resource.
      */
     @Before
-    public void setUp() throws Exception {
-        IdlingRegistry.getInstance().register(RoomBookingPresenter.getIdlingResource());
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     /**
@@ -84,7 +83,7 @@ public class CountryActivityTest {
                 .actionOnItemAtPosition(mockPosition, click()));
         intended(allOf(
                 hasComponent(BuildingActivity.class.getName()),
-                hasExtra(equalTo("countryID"), equalTo(mockPosition))
+                hasExtra(equalTo("countryID"), equalTo(String.valueOf(mockPosition)))
         ));
         Intents.release();
     }
@@ -92,9 +91,10 @@ public class CountryActivityTest {
     /**
      * Teardown method.
      * @throws Exception - Exception
+     * Runs after each test case, to unregister the espresso idling resource.
      */
     @After
-    public void tearDown() throws Exception {
-        IdlingRegistry.getInstance().unregister(RoomBookingPresenter.getIdlingResource());
+    public void unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 }

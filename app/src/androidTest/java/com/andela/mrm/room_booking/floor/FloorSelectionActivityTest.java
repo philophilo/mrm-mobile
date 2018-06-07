@@ -9,8 +9,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.andela.mrm.R;
-import com.andela.mrm.presenter.RoomBookingPresenter;
 import com.andela.mrm.room_booking.meeting_room.RoomSelectionActivity;
+import com.andela.mrm.util.EspressoIdlingResource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class FloorSelectionActivityTest {
      */
     @Before
     public void intentWithStubbedFloors() {
-        IdlingRegistry.getInstance().register(RoomBookingPresenter.getIdlingResource());
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putString("countryID", "1");
@@ -96,6 +96,6 @@ public class FloorSelectionActivityTest {
      */
     @After
     public void tearDown() throws Exception {
-        IdlingRegistry.getInstance().unregister(RoomBookingPresenter.getIdlingResource());
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 }
