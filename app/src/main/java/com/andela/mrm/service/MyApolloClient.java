@@ -40,7 +40,6 @@ public final class MyApolloClient {
      * Apollo client implementation method.
      *
      * @param context - current application view context
-     *
      * @return expected myApolloClient object.
      */
     public static ApolloClient getMyApolloClient(Context context) {

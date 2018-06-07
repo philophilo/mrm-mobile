@@ -52,5 +52,5 @@ task jacocoTestReport(type: JacocoReport, dependsOn : 'test') {
             }
         }
     }
-
 }
+
