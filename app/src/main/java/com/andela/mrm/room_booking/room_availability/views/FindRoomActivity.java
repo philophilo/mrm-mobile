@@ -1,7 +1,5 @@
 package com.andela.mrm.room_booking.room_availability.views;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +10,7 @@ import android.widget.ImageView;
 import com.andela.mrm.R;
 import com.andela.mrm.adapter.DropdownFilterAdapter;
 import com.andela.mrm.adapter.FindRoomAdapter;
-import com.andela.mrm.adapter.SelectedFiltersAdapter;
+import com.andela.mrm.adapter.SelectedFilterAdapter;
 import com.andela.mrm.room_booking.room_availability.models.Rooms;
 
 import java.util.ArrayList;
@@ -31,8 +29,8 @@ public class FindRoomActivity extends AppCompatActivity {
      * The Room.
      */
     Rooms room;
-    private ImageView filterAvailability, filterLocation, filterCapacity, filterAmenities;
-    private RecyclerView availabilityFilterDropdown, locationFilterDropdown, capacityFilterDropdown,
+    public ImageView filterAvailability, filterLocation, filterCapacity, filterAmenities;
+    public RecyclerView availabilityFilterDropdown, locationFilterDropdown, capacityFilterDropdown,
     amenitiesFilterDropdown, selectedFiltersDisplay;
     /**
      * The Availabilty options.
@@ -203,10 +201,10 @@ public class FindRoomActivity extends AppCompatActivity {
     public void updateFilters(List<String> filtersList) {
         if (selectedFiltersDisplay == null) {
             selectedFiltersDisplay = findViewById(R.id.layout_filters_display);
+        }
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,
                     LinearLayoutManager.HORIZONTAL, false);
-            selectedFiltersDisplay.setAdapter(new SelectedFiltersAdapter(filtersList));
+            selectedFiltersDisplay.setAdapter(new SelectedFilterAdapter(filtersList));
             selectedFiltersDisplay.setLayoutManager(layoutManager);
-        }
     }
 }

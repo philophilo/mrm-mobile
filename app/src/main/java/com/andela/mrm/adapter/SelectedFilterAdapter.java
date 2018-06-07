@@ -15,17 +15,16 @@ import java.util.List;
 /**
  * The type Selected filters adapter.
  */
-public class SelectedFiltersAdapter extends RecyclerView.Adapter<SelectedFiltersAdapter.ViewHolder>
-{
+public class SelectedFilterAdapter extends RecyclerView.Adapter<SelectedFilterAdapter.ViewHolder> {
 
-    private List<String> selectedFilters;
+    public final List<String> selectedFilters;
 
     /**
      * Instantiates a new Selected filters adapter.
      *
      * @param selectedFilters the selected filters
      */
-    public SelectedFiltersAdapter(List<String> selectedFilters) {
+    public SelectedFilterAdapter(List<String> selectedFilters) {
         this.selectedFilters = selectedFilters;
     }
 
@@ -34,7 +33,7 @@ public class SelectedFiltersAdapter extends RecyclerView.Adapter<SelectedFilters
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ConstraintLayout view = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.partial_selected_filter, parent, false);
-        return new SelectedFiltersAdapter.ViewHolder(view);
+        return new SelectedFilterAdapter.ViewHolder(view);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class SelectedFiltersAdapter extends RecyclerView.Adapter<SelectedFilters
         /**
          * The Chip view.
          */
-        ChipView chipView;
+        public ChipView chipView;
 
         /**
          * Instantiates a new View holder.

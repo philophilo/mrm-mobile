@@ -101,7 +101,7 @@ public class FindRoomAdapter extends RecyclerView.Adapter<FindRoomAdapter.ViewHo
             roomName.setText(rooms.get(position).getName());
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
             amenitiesRecyclerView
-                    .setAdapter(new RoomAmenitiesAdapter(rooms.get(position).getAmenities()));
+                    .setAdapter(new FindRoomAmenitiesAdapter(rooms.get(position).getAmenities()));
             amenitiesRecyclerView.setLayoutManager(layoutManager);
         }
     }

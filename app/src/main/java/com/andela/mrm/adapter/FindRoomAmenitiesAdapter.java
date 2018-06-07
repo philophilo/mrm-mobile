@@ -15,7 +15,8 @@ import java.util.List;
 /**
  * The type Find room adapter.
  */
-public class RoomAmenitiesAdapter extends RecyclerView.Adapter<RoomAmenitiesAdapter.ViewHolder> {
+public class FindRoomAmenitiesAdapter extends RecyclerView.Adapter
+        <FindRoomAmenitiesAdapter.ViewHolder> {
     /**
      * The Rooms.
      */
@@ -26,17 +27,17 @@ public class RoomAmenitiesAdapter extends RecyclerView.Adapter<RoomAmenitiesAdap
      *
      * @param amenities the amenities
      */
-    public RoomAmenitiesAdapter(List<String> amenities) {
+    public FindRoomAmenitiesAdapter(List<String> amenities) {
         this.amenities = amenities;
     }
 
     @NonNull
     @Override
-    public RoomAmenitiesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                              int viewType) {
+    public FindRoomAmenitiesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                  int viewType) {
         ConstraintLayout cardView = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.partial_amenities_view, parent, false);
-        return new RoomAmenitiesAdapter.ViewHolder(cardView);
+        return new FindRoomAmenitiesAdapter.ViewHolder(cardView);
     }
 
     @Override
