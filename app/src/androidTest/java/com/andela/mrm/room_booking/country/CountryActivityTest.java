@@ -64,7 +64,7 @@ public class CountryActivityTest {
      */
     @Test
     public void expectedRecyclerViewItemsAreDisplayed() {
-        String[] expectedCountries = new String[] {"Kenya", "Nigeria", "Uganda"};
+        String[] expectedCountries = new String[]{"Kenya", "Nigeria", "Uganda"};
 
         for (String country : expectedCountries) {
             onView(withText(country)).check(matches(isDisplayed()));
@@ -89,11 +89,12 @@ public class CountryActivityTest {
     }
 
     /**
+     * Teardown method.
+     * @throws Exception - Exception
      * Runs after each test case, to unregister the espresso idling resource.
      */
     @After
     public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
-
 }

@@ -87,7 +87,6 @@ public class RoomBookingPresenter {
                                     .get(Integer.parseInt(countryID)).blocks()
                                     .get(Integer.parseInt(buildingID)).floors());
                         }
-
                         EspressoIdlingResource.decrement();
                     }
 
