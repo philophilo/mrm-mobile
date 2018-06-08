@@ -21,10 +21,15 @@
         <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="Theme.Transparent" parent="android:Theme">
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@drawable/room_availability_background_gradient</item>
         <item name="android:backgroundDimEnabled">true</item>
+
+    </style>
+
+    <style name="MyCheckbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:colorControlActivated">@color/checkboxChecked</item>
     </style>
 
 </resources>
