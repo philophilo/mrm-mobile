@@ -48,4 +48,18 @@
         Give feedback on meeting rooms right from the meeting room without stepping out
     </string>
     <string name="responseImage">response</string>
+    <string name="floor_location">Block A, Second Floor</string>
+    <string name="capacity">Capacity</string>
+    <string name="static_five">5</string>
+    <string name="title_activity_room_info">RoomInfo</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="room_amenities">Room Amenities</string>
+    <string name="similar_rooms">Similar Rooms</string>
+    <string name="room_amenities_text">Room Amenities</string>
+    <string name="room_name_text">Ol Karia</string>
+    <string name="attend_icon">attend_icon</string>
 </resources>
