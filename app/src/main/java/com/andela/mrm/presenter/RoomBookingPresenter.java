@@ -7,6 +7,7 @@ import com.andela.mrm.room_booking.building.BuildingFragment;
 import com.andela.mrm.room_booking.country.CountryFragment;
 import com.andela.mrm.room_booking.floor.FloorSelectionFragment;
 import com.andela.mrm.service.MyApolloClient;
+import com.andela.mrm.util.EspressoIdlingResource;
 import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
@@ -64,6 +65,8 @@ public class RoomBookingPresenter {
                                 @Nullable final String countryID,
                                 @Nullable final String buildingID) {
 
+        EspressoIdlingResource.increment();
+
         MyApolloClient.getMyApolloClient(currentFragment.getContext())
                 .query(AllLocationsQuery.builder().build())
                 .enqueue(new ApolloCall.Callback<AllLocationsQuery.Data>() {
@@ -84,6 +87,7 @@ public class RoomBookingPresenter {
                                     .get(Integer.parseInt(countryID)).blocks()
                                     .get(Integer.parseInt(buildingID)).floors());
                         }
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
@@ -94,6 +98,8 @@ public class RoomBookingPresenter {
                                         .isDeviceOnline(view.getContext())
                         );
                         dataLoadedCallback.onDataLoaded(false);
+
+                        EspressoIdlingResource.decrement();
                     }
                 });
 

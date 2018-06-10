@@ -3,7 +3,7 @@ package com.andela.mrm.room_booking.room_information;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +44,8 @@ public class SimilarRoomFragment extends Fragment {
                 .inflate(R.layout.fragment_similar_room, container, false);
         mRecyclerView = view.findViewById(R.id.similar_room_recycler_view);
         mRecyclerView.hasFixedSize();
-        layoutManager = new GridLayoutManager(getContext(), 3);
+        layoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         RecyclerView.Adapter adapter = new SimilarRoomAdapter(setRooms(), getContext());
         mRecyclerView.setAdapter(adapter);
@@ -81,6 +82,10 @@ public class SimilarRoomFragment extends Fragment {
                 RoomInformation("Wasini", roomItems,
                 8, 10, "Block A, First Floor",
                 "Jabra Speaker"));
+        roomAmenitesInformation.add(new
+                RoomInformation("Naija", roomItems,
+                8, 10, "Block B, First Floor",
+                "Speaker"));
         return roomAmenitesInformation;
     }
 
