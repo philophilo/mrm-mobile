@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.andela.mrm.R;
 import com.andela.mrm.contract.IGoogleCalenderCallListener;
 import com.andela.mrm.presenter.MakeGoogleCalendarCallPresenter;
+import com.andela.mrm.room_booking.room_information.RoomInformationActivity;
 import com.andela.mrm.util.GooglePlayService;
 import com.andela.mrm.util.NetworkConnectivityChecker;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -43,7 +44,7 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         MeetingRoomDetailFragment.IOnStartCountDown, EasyPermissions.PermissionCallbacks {
 
     private FragmentManager fragmentManager;
-    private LinearLayout roomSchedule, findRoomLayout;
+    private LinearLayout roomSchedule, roomInformation, findRoomLayout;
 
     /**
      * The Items.
@@ -94,6 +95,17 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_room_availability);
 
         roomSchedule = findViewById(R.id.layout_schedule);
+        roomInformation = findViewById(R.id.layout_room_info);
+
+        setRoomScheduleOnClickListener(null);
+        roomInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomAvailabilityActivity.this,
+                        RoomInformationActivity.class);
+                startActivity(intent);
+            }
+        });
         findRoomLayout = findViewById(R.id.layout_find_room);
 
         setRoomScheduleOnClickListener(null);
@@ -354,6 +366,7 @@ public class RoomAvailabilityActivity extends AppCompatActivity implements
             }
         });
     }
+
 
     /**
      * sets findRoomLayout Listener.
