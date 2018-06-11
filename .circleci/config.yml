@@ -483,7 +483,7 @@ jobs:
           command: gcloud auth activate-service-account mrm-android-editor@andela-learning.iam.gserviceaccount.com --key-file client-secret.json && gcloud firebase test android models list
       - run:
           name: Run instrumented test on Firebase Test Lab
-          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --no-record-video --timeout 20m
+          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m
       - run:
           name: Create directory to store test results
           command: mkdir firebase
@@ -519,11 +519,24 @@ jobs:
       - *export_gservices_key
       - *decode_gservices_key
       - run:
+          name: Code Climate Test Setup
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Code Climate Pretest
+          command: ./cc-test-reporter before-build
+      - run:
           name: Generate JaCoCo report
           command: ./gradlew jacocoTestReport
       - run:
-          name: Upload coverage report to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          name: Upload coverage to code climate
+          command: |
+            export JACOCO_SOURCE_PATH=app/src/main/java
+            cp -R app/build/generated/source/apollo/com/andela/mrm/type app/src/main/java/com/andela/mrm/
+            cp app/build/generated/source/apollo/com/andela/mrm/AllLocationsQuery.java app/src/main/java/com/andela/mrm/
+            ./cc-test-reporter format-coverage app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml -t jacoco
+            ./cc-test-reporter upload-coverage
       - store_artifacts:
           path: app/build/reports/
           destination: /reports/

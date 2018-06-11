@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/meeting_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:background="@drawable/btn_meeting_room"
+        android:fontFamily="@font/dinpro"
         android:text="@string/meeting_room_name"
         android:textAllCaps="false"
         android:textColor="@drawable/btn_meeting_room_text_state"
         android:textSize="20sp"
-        android:fontFamily="@font/dinpro"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

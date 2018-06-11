@@ -36,17 +36,19 @@ public class BuildingFragment extends Fragment implements RoomBookingContract.Bu
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-          countryID = (String) getArguments().getSerializable(BuildingActivity.ARG_COUNTRY_ID);
+          countryID = getArguments().getString("countryID");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         view = inflater
                 .inflate(R.layout.fragment_building, container, false);
-        roomPresenter.getAllLocations(this, null,  countryID, null);
+
+        roomPresenter.getAllLocations(this, null,
+                countryID, null, null);
+
         return view;
     }
 

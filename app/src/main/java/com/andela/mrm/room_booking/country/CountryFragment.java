@@ -71,7 +71,7 @@ public class CountryFragment extends Fragment implements RoomBookingContract.Cou
                     });
                 }
             }
-        }, null, null);
+        }, null, null, null);
     }
 
     @Override
