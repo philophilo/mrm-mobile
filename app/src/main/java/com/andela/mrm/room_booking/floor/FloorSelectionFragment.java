@@ -52,7 +52,8 @@ public class FloorSelectionFragment extends Fragment implements RoomBookingContr
      */
     public void queryApi() {
         roomBookingPresenter
-                .getAllLocations(this, null, countryID, buildingID);
+                .getAllLocations(this, null, countryID,
+                        buildingID, null);
     }
 
     @Override
@@ -71,7 +72,8 @@ public class FloorSelectionFragment extends Fragment implements RoomBookingContr
             @Override
             public void run() {
                 mRecyclerView.setLayoutManager(mlayoutManager);
-                RecyclerView.Adapter adapter = new FloorAdapter(getContext(), mFloor);
+                RecyclerView.Adapter adapter =
+                        new FloorAdapter(getContext(), mFloor, countryID, buildingID);
                 mRecyclerView.setAdapter(adapter);
             }
         });

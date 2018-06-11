@@ -4,7 +4,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.idling.CountingIdlingResource;
 
 /**
- * EspressoIdlingResouce class.
+ * EspressoIdlingResource class.
  */
 public final class EspressoIdlingResource {
     private static final String RESOURCE = "GLOBAL";
@@ -43,4 +43,3 @@ public final class EspressoIdlingResource {
         return mCountingIdlingResource;
     }
 }
-

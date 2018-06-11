@@ -47,5 +47,6 @@
     <string name="onBoarding_description_three">
         Give feedback on meeting amenities right from the meeting room without stepping out
     </string>
+    <string name="no_meeting_room">Oops!!!...No Meeting Room For This Floor</string>
     <string name="responseImage">response</string>
 </resources>
