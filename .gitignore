@@ -12,6 +12,8 @@ instapk.properties
 .hgignore
 .idea/instapk.xml
 keystores/
+app/src/mock/*
+app/src/prod/*
 app/google-services.json
 app/src/mock/debug/google-services.json
 app/src/mock/release/google-services.json
