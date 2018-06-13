@@ -53,7 +53,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/room_name"
+        android:id="@+id/room_name_text"
         style="@style/seven_inch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,10 +75,10 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_name" />
+        app:layout_constraintTop_toBottomOf="@+id/room_name_text" />
 
     <TextView
-        android:id="@+id/floor_location"
+        android:id="@+id/floor_location_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="708dp"
@@ -88,7 +88,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_name" />
+        app:layout_constraintTop_toBottomOf="@+id/room_name_text" />
 
     <ImageView
         android:id="@+id/layout_close_event_schedule"
