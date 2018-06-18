@@ -64,3 +64,5 @@ There can be many ways of running your application in Android Studio.
      * While updating the google play services one can follow this link
      https://developers.google.com/android/guides/setup
      http://www.androiddocs.com/google/play-services/setup.html#
+
+## Edit
