@@ -1,13 +1,22 @@
 package com.andela.mrm.room_booking;
 
+import android.content.Intent;
+import android.preference.PreferenceManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 import com.andela.mrm.R;
 import com.andela.mrm.room_booking.room_availability.views.FindRoomActivity;
+import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
 
+import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -24,6 +33,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 /**
  * The type Event schedule activity test.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(JUnit4.class)
 public class FindRoomActivityTest {
 
     /**
@@ -31,13 +42,35 @@ public class FindRoomActivityTest {
      */
     @Rule
     public ActivityTestRule<FindRoomActivity> activityTestRule =
-            new ActivityTestRule<>(FindRoomActivity.class);
+            new ActivityTestRule<>(FindRoomActivity.class, true, false);
+
+    /**
+     * Sets up.
+     */
+    @Before
+    public void setUp() {
+        String name;
+        try {
+            name = new GoogleAccountManager(InstrumentationRegistry.getTargetContext())
+                    .getAccounts()[0].name;
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            name = "";
+        }
+
+        PreferenceManager
+                .getDefaultSharedPreferences(InstrumentationRegistry.getTargetContext())
+                .edit()
+                .putString(FindRoomActivity.PREF_ACCOUNT_NAME, name)
+                .commit();
+        activityTestRule.launchActivity(new Intent());
+    }
 
     /**
      * Find room activity is displayed correctly.
      */
     @Test
-    public void FindRoomActivityIsDisplayedCorrectly() {
+    public void test1_FindRoomActivityIsDisplayedCorrectly() {
+
         onView(withId(R.id.close_find_room))
                 .check(matches(isDisplayed()));
 
@@ -61,7 +94,7 @@ public class FindRoomActivityTest {
      * Filters are displayed correctly.
      */
     @Test
-    public void filtersAreDisplayedCorrectly() {
+    public void test2_filtersAreDisplayedCorrectly() {
         onView(withId(R.id.layout_filters))
                 .check(matches(allOf(isDisplayed(), hasChildCount(4))));
 
@@ -76,7 +109,7 @@ public class FindRoomActivityTest {
      * Filtered result layout is displayed.
      */
     @Test
-    public void filteredResultLayoutIsDisplayed() {
+    public void test3_filteredResultLayoutIsDisplayed() {
         View view = activityTestRule.getActivity().findViewById(R.id.layout_filters_display);
         assertNotNull(view);
     }
@@ -86,7 +119,7 @@ public class FindRoomActivityTest {
      * Dropdowns are present.
      */
     @Test
-    public void dropdownsArePresent() {
+    public void test4_dropdownsArePresent() {
         View view = activityTestRule.getActivity().findViewById(R.id.layout_filters_display);
         assertNotNull(view);
 
@@ -111,9 +144,10 @@ public class FindRoomActivityTest {
      * Close button finishes activity.
      */
     @Test
-    public void closeButtonFinishesActivity() {
+    public void test5_closeButtonFinishesActivity() {
         onView(withId(R.id.close_find_room))
                 .perform((click()));
         assertTrue(activityTestRule.getActivity().isDestroyed());
     }
+
 }
