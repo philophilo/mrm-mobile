@@ -20,10 +20,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -62,7 +67,7 @@ public class RoomAvailabilityActivityTest {
                 .getDefaultSharedPreferences(InstrumentationRegistry.getTargetContext())
                 .edit()
                 .putString(RoomAvailabilityActivity.PREF_ACCOUNT_NAME, name)
-                .commit();
+                .apply();
         activityTestRule.launchActivity(new Intent());
     }
 
@@ -142,5 +147,29 @@ public class RoomAvailabilityActivityTest {
         onView(withId(R.id.layout_schedule))
                 .check(matches(hasChildCount(2)));
         Intents.release();
+    }
+
+
+    /**
+     * Time line stripe is displayed and works as required.
+     */
+    @Test
+    public void timeLineStripeIsDisplayedAndWorksAsRequired() {
+
+        onView(allOf(withId(R.id.view_time_line_strip),
+                isDescendantOfA(allOf(withId(R.id.frame_room_availability_time_line),
+                        withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                        not(isClickable()))),
+                isClickable(),
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+                .check(matches(isDisplayed()));
+
+        onView(allOf(withId(R.id.frame_room_availability_time_line),
+                hasChildCount(1),
+                hasDescendant(withId(R.id.view_time_line_strip)),
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE),
+                not(isClickable())))
+                .check(matches(isDisplayed()))
+                .perform(swipeLeft(), swipeRight());
     }
 }
