@@ -66,4 +66,4 @@ There can be many ways of running your application in Android Studio.
      http://www.androiddocs.com/google/play-services/setup.html#
 
 ## Edit
-     Test 
+     Test slack integration 
