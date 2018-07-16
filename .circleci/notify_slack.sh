@@ -115,11 +115,11 @@ declare_env_variables() {
     CIRCLE_APK_ARTIFACTS="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
     /g' |  grep '\.apk')"
 
-    CIRCLE_MOCK_DEBUG_ARTIFACT="$(echo $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
-    /g' |  grep 'mock-debug[a-z0-9.-]*[a-z0-9.-]*.apk$')"
+    CIRCLE_MOCK_DEBUG_ARTIFACT="$(echo -e $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
+/g' |  grep 'mock-debug[a-z0-9.-]*[a-z0-9.-]*.apk$' | tr -d '[:blank:]')"
 
-    CIRCLE_PROD_DEBUG_ARTIFACT="$(echo $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
-    /g' |  grep 'prod-debug[a-z0-9.-]*[a-z0-9.-]*.apk$')"
+    CIRCLE_PROD_DEBUG_ARTIFACT="$(echo -e $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
+/g' |  grep 'prod-debug[a-z0-9.-]*[a-z0-9.-]*.apk$' | tr -d '[:blank:]')"
 
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
         "{\"type\": \"button\", \"text\": \"Mock debug APK\", \"url\": \"${CIRCLE_MOCK_DEBUG_ARTIFACT}\"}", \
