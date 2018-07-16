@@ -119,7 +119,7 @@ declare_env_variables() {
 /g' |  grep 'debug[a-z0-9.-]*[a-z0-9.-]*.apk$')"
 
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
-        "{\"type\": \"button\", \"text\": \"Debug APK\", \"url\": \"${CIRCLE_DEBUG_ARTIFACT}\"}", \
+        "{\"type\": \"button\", \"text\": \"Debug APK\", \"url\": \"${CIRCLE_DEBUG_ARTIFACT}\"}"
     )"
 
     MESSAGE_TEXT="Deploy Debug Build Succeeded :rocket:"
