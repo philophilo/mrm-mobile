@@ -111,17 +111,26 @@ declare_env_variables() {
 
     MESSAGE_TEXT="Deploy Staging Build Succeeded :rocket:"
 
-
-  elif [ "$CIRCLE_JOB" == 'deploy_production_build' ]; then
+  elif [ "$CIRCLE_JOB" == 'deploy_debug_build' ]; then
     CIRCLE_APK_ARTIFACTS="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
 /g' |  grep '\.apk')"
 
     CIRCLE_DEBUG_ARTIFACT="$(echo $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
 /g' |  grep 'debug[a-z0-9.-]*[a-z0-9.-]*.apk$')"
+    CIRCLE_ARTIFACTS_BUTTON="$(echo \
+        "{\"type\": \"button\", \"text\": \"Debug APK\", \"url\": \"${CIRCLE_DEBUG_ARTIFACT}\"}", \
+    )"
+
+    MESSAGE_TEXT="Deploy Staging Build Succeeded :rocket:"
+
+
+  elif [ "$CIRCLE_JOB" == 'deploy_production_build' ]; then
+    CIRCLE_APK_ARTIFACTS="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
+/g' |  grep '\.apk')"
+
     CIRCLE_RELEASE_ARTIFACT="$(echo $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
 /g' |  grep 'release[a-z0-9.-]*[a-z0-9.-]*.apk$')"
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
-        "{\"type\": \"button\", \"text\": \"Debug APK\", \"url\": \"${CIRCLE_DEBUG_ARTIFACT}\"}", \
         "{\"type\": \"button\", \"text\": \"Release APK\", \"url\": \"${CIRCLE_RELEASE_ARTIFACT}\"}" \
     )"
 
