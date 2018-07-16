@@ -435,17 +435,17 @@ jobs:
     #       path: ~/repo/app/build/reports
     #       destination: reports
 
-    #   # Sending notification
-    #   - run:
-    #       name: Notifying slack channel on succeed
-    #       when: on_success
-    #       command: |
-    #         bash ~/repo/.circleci/notify_slack.sh
-    #   - run:
-    #       name: Notifying slack channel on fail
-    #       when: on_fail
-    #       command: |
-    #         bash ~/repo/.circleci/notify_slack_fail.sh
+      # Sending notification
+      - run:
+          name: Notifying slack channel on succeed
+          when: on_success
+          command: |
+            bash ~/repo/.circleci/notify_slack.sh
+      - run:
+          name: Notifying slack channel on fail
+          when: on_fail
+          command: |
+            bash ~/repo/.circleci/notify_slack_fail.sh
   deploy_production_build:
     <<: *defaults
     steps:
