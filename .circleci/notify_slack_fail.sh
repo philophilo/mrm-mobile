@@ -15,8 +15,9 @@ declare_env_variables() {
 
 
   # Retrieving the urls for the CircleCI artifacts
-
-  CIRCLE_ARTIFACTS_URL="$(curl https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BUILD_NUM}/artifacts?circle-token=${CIRCLE_TOKEN} | grep -o 'https://[^"]*')"
+  if [ "$INSTRUMENT_TEST_ARTIFACT" != exempted ]; then
+    CIRCLE_ARTIFACTS_URL="$(curl https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BUILD_NUM}/artifacts?circle-token=${CIRCLE_TOKEN} | grep -o 'https://[^"]*')"
+  fi
 
   # Assigning slack messages based on the CircleCI job name
 
@@ -55,6 +56,16 @@ declare_env_variables() {
     CIRCLE_REPORT_ARTIFACTS="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
 /g' |  grep '\.html')"
     CIRCLE_ARTIFACTS_BUTTON="$(echo {\"type\": \"button\", \"text\": \"Checkstyle Lint Report\", \"url\": \"${CIRCLE_REPORT_ARTIFACTS}\"})"
+
+  elif [ "$CIRCLE_JOB" == 'report_coverage' ]; then
+    MESSAGE_TEXT="Coverage Reporting Failed! :scream:"
+
+    # Sorting through the artifact urls to get only the unit test and integration test reports
+    DEBUG_REPORT="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
+/g' |  grep 'jacocoTestReport\/html\/index\.html')"
+    CIRCLE_ARTIFACTS_BUTTON="$(echo \
+        "{\"type\": \"button\", \"text\": \"Test Coverage Report\", \"url\": \"${DEBUG_REPORT}\"}", \
+    )"
 
   elif [ "$CIRCLE_JOB" == 'test_instrumentation' ]; then
     MESSAGE_TEXT="Instrumentation Test Failed! :scream:"

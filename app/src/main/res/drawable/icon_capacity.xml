@@ -3,10 +3,12 @@
     android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <corners
-        android:radius="11dp" />
+        android:radius="15dp"
+        android:topRightRadius="0dp"
+        android:bottomRightRadius="0dp"
+        />
     <size
-        android:height="22dp"
-        android:width="109dp" />
-    <solid
-        android:color="#FF3359DB" />
+        android:height="30dp"
+        android:width="100dp" />
+    <solid android:color="#FF3359DB" />
 </shape>
