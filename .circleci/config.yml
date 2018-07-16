@@ -403,7 +403,6 @@ jobs:
           when: on_fail
           command: |
             bash ~/repo/.circleci/notify_slack_fail.sh
-
   deploy_debug_build:
     <<: *defaults
     steps:
@@ -447,7 +446,6 @@ jobs:
           when: on_fail
           command: |
             bash ~/repo/.circleci/notify_slack_fail.sh
-
   deploy_production_build:
     <<: *defaults
     steps:
