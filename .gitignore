@@ -5,6 +5,7 @@
 /build
 /captures
 .externalNativeBuild
+script.sh
 
 .idea/
 instapk.log*
