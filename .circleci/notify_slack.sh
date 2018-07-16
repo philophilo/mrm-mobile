@@ -117,12 +117,20 @@ declare_env_variables() {
 
     CIRCLE_DEBUG_ARTIFACT="$(echo $CIRCLE_APK_ARTIFACTS | sed -E -e 's/[[:blank:]]+/\
 /g' |  grep 'debug[a-z0-9.-]*[a-z0-9.-]*.apk$')"
+
     CIRCLE_ARTIFACTS_BUTTON="$(echo \
         "{\"type\": \"button\", \"text\": \"Debug APK\", \"url\": \"${CIRCLE_DEBUG_ARTIFACT}\"}", \
     )"
 
-    MESSAGE_TEXT="Deploy Staging Build Succeeded :rocket:"
-
+    MESSAGE_TEXT="Deploy Debug Build Succeeded :rocket:"
+    
+    echo "============================="
+    echo $CIRCLE_APK_ARTIFACTS
+    echo "============================="
+    echo $CIRCLE_DEBUG_ARTIFACT
+    echo "============================="
+    echo $CIRCLE_ARTIFACTS_BUTTON
+    echo "============================="
 
   elif [ "$CIRCLE_JOB" == 'deploy_production_build' ]; then
     CIRCLE_APK_ARTIFACTS="$(echo $CIRCLE_ARTIFACTS_URL | sed -E -e 's/[[:blank:]]+/\
