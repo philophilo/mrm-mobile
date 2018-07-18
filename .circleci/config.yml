@@ -498,7 +498,7 @@ jobs:
             ls -la
             file="$(ls error)"
             echo $file
-            if [ $file == error]; then
+            if [ $file == "error" ]; then
               cat error
             fi
       - run:
