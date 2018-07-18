@@ -488,17 +488,17 @@ jobs:
           name: Run instrumented test on Firebase Test Lab
           when: on_success
           command: |
-            results="$(gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m 2>&1)"
+            gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m > results 2>error
             echo "======================="
-            echo $results
+            cat results
       - run:
           name: Print firebase error results
           when: on_fail
           command: |
             ls -la
-            file="$(ls results)"
+            file="$(ls error)"
             echo $file
-            if [ $file == results ]; then
+            if [ $file == error]; then
               echo $results
             fi
       - run:
