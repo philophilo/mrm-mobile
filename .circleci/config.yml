@@ -612,7 +612,7 @@ workflows:
     #       filters:
     #         branches:
     #           only: master
-      - test_instrumentation:
+      - test_instrumentation
     #      requires:
     #        - deploy_test_build
     #   - report_coverage:
