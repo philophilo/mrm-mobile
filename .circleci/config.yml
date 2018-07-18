@@ -499,7 +499,7 @@ jobs:
             file="$(ls error)"
             echo $file
             if [ $file == error]; then
-              echo $results
+              cat error
             fi
       - run:
           name: Create directory to store test results
