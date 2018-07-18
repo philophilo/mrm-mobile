@@ -492,6 +492,15 @@ jobs:
             echo "======================="
             echo $results
       - run:
+          name: Print firebase error results
+          when: on_fail
+          command: |
+            file="$(ls results)"
+            echo $file
+            if [ $file == results ]; then
+              echo $results
+            fi
+      - run:
           name: Create directory to store test results
           command: mkdir firebase
       - run:
