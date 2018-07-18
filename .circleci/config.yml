@@ -487,7 +487,9 @@ jobs:
       - run:
           name: Run instrumented test on Firebase Test Lab
           when: on_success
-          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m
+          command: |
+            gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m --format=json > results.json 
+            printf results.json
       - run:
           name: Create directory to store test results
           command: mkdir firebase
@@ -583,35 +585,35 @@ workflows:
   version: 2
   lint_test_and_deployment:
     jobs:
-      - android_lint
-      - findbugs_lint
-      - pmd_lint
-      - checkstyle_lint
-      - test_unit:
-          requires:
-            - android_lint
-            - findbugs_lint
-            - pmd_lint
-            - checkstyle_lint
+    #   - android_lint
+    #   - findbugs_lint
+    #   - pmd_lint
+    #   - checkstyle_lint
+    #   - test_unit:
+    #       requires:
+    #         - android_lint
+    #         - findbugs_lint
+    #         - pmd_lint
+    #         - checkstyle_lint
       - deploy_test_build:
-          requires:
-            - test_unit
-      - deploy_staging_build:
-          requires:
-            - test_unit
-          filters:
-            branches:
-              only: staging
-      - deploy_production_build:
-          requires:
-            - test_unit
-            - deploy_test_build
-          filters:
-            branches:
-              only: master
+        #   requires:
+        #     - test_unit
+    #   - deploy_staging_build:
+    #       requires:
+    #         - test_unit
+    #       filters:
+    #         branches:
+    #           only: staging
+    #   - deploy_production_build:
+    #       requires:
+    #         - test_unit
+    #         - deploy_test_build
+    #       filters:
+    #         branches:
+    #           only: master
       - test_instrumentation:
           requires:
             - deploy_test_build
-      - report_coverage:
-          requires:
-            - test_instrumentation
+    #   - report_coverage:
+    #       requires:
+    #         - test_instrumentation
