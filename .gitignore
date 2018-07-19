@@ -7,6 +7,7 @@
 .externalNativeBuild
 com.sh
 script.sh
+.ropeproject/*
 
 .idea/
 instapk.log*
