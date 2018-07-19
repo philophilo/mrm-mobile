@@ -489,9 +489,9 @@ jobs:
           when: on_success
           command: |
             gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m > results 2>error
-            echo "======================="
             cat error
             cat results
+            cat error | grep -o 'https://[^"]*' | grep 'https://console.developers.google.com/storage/browser/test-lab-[a-z0-9.-]*' | tr -d '\]' > artifact_url
       - run:
           name: Print firebase error results
           when: on_fail
@@ -507,7 +507,12 @@ jobs:
           command: mkdir firebase
       - run:
           name: Download instrumented test results from Firebase Test Lab on success
-          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-42q965dw0t03q-w3crkis8m06h6 | tail -1`*" /root/repo/firebase/ || true
+          command: |
+            sudo bash -c "yes | add-apt-repository ppa:jonathonf/python-3.6 && apt-get update && apt-get install -y python3.6"
+            python --version
+            python get_artifact_path.py
+            artifact_path = "$(cat artifact_path)"
+            gsutil -m cp -r -U "${artifact_path}" /root/repo/firebase/ || true
       - *persist_firebase_workspace
       - store_artifacts:
           when: on_success
