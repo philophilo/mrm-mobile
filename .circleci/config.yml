@@ -529,7 +529,9 @@ jobs:
           command: |
             if [ "$INSTRUMENT_TEST_ARTIFACT" == required ]; then
               mkdir firebase
-              gsutil -m cp -r -U "`gsutil ls gs://test-lab-42q965dw0t03q-w3crkis8m06h6 | tail -1`*" /root/repo/firebase/ || true
+              python get_artifact_path.py
+              artifact_path = "$(cat artifact_path)"
+              gsutil -m cp -r -U "${artifact_path}" /root/repo/firebase/ || true
             fi
       - store_artifacts:
           when: on_fail
