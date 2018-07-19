@@ -325,7 +325,6 @@ jobs:
       - run:
           name: Setup Keystore Environment
           command: |
-            python --version
             bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
@@ -509,8 +508,6 @@ jobs:
       - run:
           name: Download instrumented test results from Firebase Test Lab on success
           command: |
-            sudo bash -c "yes | add-apt-repository ppa:jonathonf/python-3.6 && apt-get update && apt-get install -y python3.6"
-            python --version
             python get_artifact_path.py
             artifact_path = "$(cat artifact_path)"
             gsutil -m cp -r -U "${artifact_path}" /root/repo/firebase/ || true
