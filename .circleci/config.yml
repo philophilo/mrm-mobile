@@ -325,6 +325,7 @@ jobs:
       - run:
           name: Setup Keystore Environment
           command: |
+            python --version
             bash ~/repo/.circleci/keystore_setup.sh
       - restore_cache:
           keys:
