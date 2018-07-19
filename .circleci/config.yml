@@ -508,7 +508,7 @@ jobs:
       - run:
           name: Download instrumented test results from Firebase Test Lab on success
           command: |
-            python get_artifact_path.py
+            python .circleci/get_artifact_path.py
             artifact_path = "$(cat artifact_path)"
             gsutil -m cp -r -U "${artifact_path}" /root/repo/firebase/ || true
       - *persist_firebase_workspace
