@@ -2,6 +2,7 @@ import re
 
 
 def read_url_file():
+    print "read url file ============"
     url_file = open("artifact_url", "r")
     if url_file.mode == "r":
         return url_file.read()
