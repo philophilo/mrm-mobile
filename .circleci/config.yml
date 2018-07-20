@@ -511,7 +511,7 @@ jobs:
             ls -l .circleci/
             python .circleci/get_artifact_path.py
             ls -la
-            artifact_path = "$(cat artifact_path)"
+            artifact_path="$(cat artifact_path)"
             gsutil -m cp -n -r gs://${artifact_path}* /root/repo/firebase/ || true
       - *persist_firebase_workspace
       - store_artifacts:
