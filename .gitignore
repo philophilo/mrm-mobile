@@ -8,6 +8,7 @@
 com.sh
 script.sh
 .ropeproject/*
+.circleci/test.sh
 
 .idea/
 instapk.log*
