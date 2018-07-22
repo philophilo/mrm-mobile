@@ -488,7 +488,7 @@ jobs:
           name: Run instrumented test on Firebase Test Lab
           when: on_success
           command: |
-            gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m > results 2>error
+            .circleci/spinner.sh gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/mock/debug/app-mock-debug.apk --test app/build/outputs/apk/androidTest/mock/debug/app-mock-debug-androidTest.apk --device model=Nexus7,version=22,locale=en,orientation=landscape --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --directories-to-pull=/sdcard --timeout 20m > results 2>error
             cat error
             cat results
             cat error | grep -o 'https://[^"]*' | grep 'https://console.developers.google.com/storage/browser/test-lab-[a-z0-9.-]*' | tr -d '\]' > artifact_url
@@ -532,8 +532,8 @@ jobs:
             if [ "$INSTRUMENT_TEST_ARTIFACT" == required ]; then
               mkdir firebase
               python get_artifact_path.py
-              artifact_path = "$(cat artifact_path)"
-              gsutil -m cp -r -U "${artifact_path}" /root/repo/firebase/ || true
+              artifact_path="$(cat artifact_path)"
+              gsutil -m cp -n -r gs://${artifact_path}* /root/repo/firebase/ || true
             fi
       - store_artifacts:
           when: on_fail
